@@ -1,0 +1,4 @@
+{
+	"TTSLua.includeOtherFilesPaths": ["C:/Projects/Tabletop Simulator/"],
+	"ttslua.misc.debugSearchPaths": "true"
+}
