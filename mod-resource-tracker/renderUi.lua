@@ -1,17 +1,18 @@
 local Array = require("lib-array/Array")
 local Object = require("lib-array/Object")
 
-local stateRef = nil
-
 local jsonInput = ""
 
 local UI_QUALITY = 4
 local ROW_HEIGHT = 36 * UI_QUALITY
-local ROW_SPACING = 12 * UI_QUALITY
+local SPACING = 12 * UI_QUALITY
+local SPACING_S = 6 * UI_QUALITY
 local UI_HEIGHT_CLOSED = 100 * UI_QUALITY
 local RESOURCE_COUNT_MIN_WIDTH = 30 * UI_QUALITY
 local LINE_WIDTH = 4 * UI_QUALITY
+
 local HEADER_PADDING = 12 * UI_QUALITY
+local FOOTER_PADDING = SPACING_S
 
 local uiElementIds = {
 	json = "json",
@@ -22,8 +23,9 @@ local function uiMain(state)
 	local uiHeight = math.max(
 		UI_HEIGHT_CLOSED,
 		(
-			(ROW_HEIGHT + ROW_SPACING) * (#resources + 1)
+			(ROW_HEIGHT + SPACING) * (#resources + 2)
 			+ HEADER_PADDING * 2
+			+ FOOTER_PADDING * 2
 		)
 	)
 
@@ -71,8 +73,49 @@ local function uiMain(state)
 				},
 
 			}
-		}
+		},
 	})
+
+	local footer = state.isOpen and Array:new({
+		{
+			tag = "HorizontalLayout",
+			attributes = {
+				childForceExpandWidth = false,
+				childForceExpandHeight = false,
+				childAlignment = "MiddleRight",
+				padding = string.format(
+					"%s %s %s %s",
+					0,
+					0,
+					FOOTER_PADDING,
+					FOOTER_PADDING
+				)
+			},
+			children = {
+				{
+					tag = "Button",
+					attributes = {
+						preferredHeight = ROW_HEIGHT,
+						preferredWidth = 500,
+						text = "Reset",
+						fontSize = 24 * UI_QUALITY,
+						textColor = "black",
+						colors = "rgb(0.85,0.85,0.85)|rgb(0.95,0.95,0.95)|rgb(0.85,0.85,0.85)",
+						onClick = "onButtonClickReset"
+					},
+				},
+				{
+					tag = "HorizontalLayout", -- padding
+					attributes = {
+						childForceExpandWidth = false,
+						childForceExpandHeight = false,
+						childAlignment = "MiddleLeft",
+						preferredWidth = SPACING,
+					}
+				},
+			}
+		}
+	}) or Array:new()
 
 	local rows = state.isOpen and resources:map(
 		function(resource, resourceId)
@@ -90,7 +133,7 @@ local function uiMain(state)
 							childForceExpandWidth = false,
 							childForceExpandHeight = false,
 							childAlignment = "MiddleLeft",
-							preferredWidth = 12 * UI_QUALITY,
+							preferredWidth = SPACING,
 						}
 					},
 					{
@@ -112,7 +155,7 @@ local function uiMain(state)
 							childForceExpandWidth = false,
 							childForceExpandHeight = false,
 							childAlignment = "MiddleLeft",
-							preferredWidth = 12 * UI_QUALITY,
+							preferredWidth = SPACING,
 						}
 					},
 					{
@@ -152,7 +195,7 @@ local function uiMain(state)
 							childForceExpandWidth = false,
 							childForceExpandHeight = false,
 							childAlignment = "MiddleLeft",
-							preferredWidth = 12 * UI_QUALITY,
+							preferredWidth = SPACING,
 						}
 					},
 					{
@@ -173,7 +216,7 @@ local function uiMain(state)
 							childForceExpandWidth = false,
 							childForceExpandHeight = false,
 							childAlignment = "MiddleLeft",
-							preferredWidth = 6 * UI_QUALITY,
+							preferredWidth = SPACING_S,
 						}
 					},
 					{
@@ -194,7 +237,7 @@ local function uiMain(state)
 							childForceExpandWidth = false,
 							childForceExpandHeight = false,
 							childAlignment = "MiddleLeft",
-							preferredWidth = 12 * UI_QUALITY,
+							preferredWidth = SPACING,
 						}
 					},
 				}
@@ -202,7 +245,7 @@ local function uiMain(state)
 		end
 	) or Array:new()
 
-	rows = header:concat(rows)
+	rows = header:concat(rows, footer)
 
 	self.UI.setXmlTable(
 		{
@@ -225,7 +268,7 @@ local function uiMain(state)
 					childForceExpandWidth = true,
 					childForceExpandHeight = false,
 					childAlignment = "UpperLeft",
-					spacing = ROW_SPACING,
+					spacing = SPACING,
 					color = "white",
 				},
 				children = rows
@@ -255,13 +298,13 @@ local function uiFlip(state)
 				childForceExpandWidth = true,
 				childForceExpandHeight = false,
 				childAlignment = "UpperLeft",
-				spacing = ROW_SPACING,
+				spacing = SPACING,
 				padding = string.format(
 					"%s %s %s %s",
 					0,
 					0,
 					0,
-					12 * UI_QUALITY
+					SPACING
 				),
 				color = "white",
 			},
@@ -283,11 +326,11 @@ local function uiFlip(state)
 						childForceExpandHeight = false,
 						flexibleHeight = 1,
 						childAlignment = "MiddleCenter",
-						spacing = 12 * UI_QUALITY,
+						spacing = SPACING,
 						padding = string.format(
 							"%s %s %s %s",
-							12 * UI_QUALITY,
-							12 * UI_QUALITY,
+							SPACING,
+							SPACING,
 							0,
 							0
 						),
@@ -308,7 +351,7 @@ local function uiFlip(state)
 									id = uiElementIds.json,
 									preferredHeight = 0,
 									flexibleHeight = 1,
-									fontSize = 12 * UI_QUALITY,
+									fontSize = SPACING,
 									colors =
 									"rgba(0.7,0.7,0.7,1)|rgba(0.8,0.8,0.8,1)|rgba(0.8,0.8,0.8,1)|rgba(0.4,0.4,0.4,1)",
 									lineType = "MultiLineNewLine",
@@ -325,7 +368,7 @@ local function uiFlip(state)
 								preferredHeight = 32 * UI_QUALITY,
 								flexibleHeight = 0,
 								childAlignment = "MiddleRight",
-								spacing = ROW_SPACING,
+								spacing = SPACING,
 							},
 							children = {
 								{
@@ -361,7 +404,6 @@ end
 
 
 local function rebuildUi(state)
-	stateRef = state
 	if state.isFlipped then
 		uiFlip(state)
 	else
@@ -370,22 +412,22 @@ local function rebuildUi(state)
 end
 
 function onButtonClickOpen()
-	stateRef.isOpen = not stateRef.isOpen
-	rebuildUi(stateRef)
+	state.isOpen = not state.isOpen
+	rebuildUi(state)
 end
 
 function onButtonClickResourceMinus(_, resourceIdStr)
 	local resourceId = tonumber(resourceIdStr)
-	local resource = Object.entries(stateRef.data.resources)[resourceId][2]
-	resource.current = resource.current - 1
-	rebuildUi(stateRef)
+	local resource = Object.entries(state.data.resources)[resourceId][2]
+	resource.current = math.max(resource.current - 1, 0)
+	rebuildUi(state)
 end
 
 function onButtonClickResourcePlus(_, resourceIdStr)
 	local resourceId = tonumber(resourceIdStr)
-	local resource = Object.entries(stateRef.data.resources)[resourceId][2]
-	resource.current = resource.current + 1
-	rebuildUi(stateRef)
+	local resource = Object.entries(state.data.resources)[resourceId][2]
+	resource.current = math.min(resource.current + 1, resource.max)
+	rebuildUi(state)
 end
 
 function onButtonClickJsonLoad()
@@ -393,18 +435,25 @@ function onButtonClickJsonLoad()
 		uiElementIds.json,
 		"text",
 		"\r" .. -- bugs if the first character is "{"
-		JSON.encode_pretty(stateRef.data)
+		JSON.encode_pretty(state.data)
 	)
 end
 
 function onButtonClickJsonSave()
-	stateRef.data = JSON.decode(jsonInput)
-	rebuildUi(stateRef)
+	state.data = JSON.decode(jsonInput)
+	rebuildUi(state)
 	onButtonClickJsonLoad()
 end
 
 function onJsonInputEdit(_, value)
 	jsonInput = value
+end
+
+function onButtonClickReset()
+	for k, v in pairs(state.data.resources) do
+		v.current = v.max
+	end
+	rebuildUi(state)
 end
 
 return rebuildUi
