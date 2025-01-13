@@ -2,7 +2,12 @@ local rebuildUi = require("mod-resource-tracker/rebuildUi")
 
 local state = {
 	data = {},
-	isOpen = false
+	isOpen = false,
+	baseObjScale = {
+		x = 4,
+		y = 0.1,
+		z = 1
+	}
 }
 
 local str = [[

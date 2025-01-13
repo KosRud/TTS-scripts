@@ -11,25 +11,33 @@ local function rebuildUi(state)
 	local uiHeightClosed = 100 * uiQuality
 
 	local resources = Object.entries(state.data.resources)
-	local uiHeight = math.max(uiHeightClosed, (rowHeight + rowSpacing) * (#resources + 1) - rowSpacing)
-
-	local objScale = state.self.getScale()
+	local uiHeight = math.max(uiHeightClosed, (rowHeight + rowSpacing) * (#resources + 1))
 
 	local firstRow = {
 		tag = "HorizontalLayout",
 		attributes = {
-			height = rowHeight * uiQuality,
+			height = rowHeight,
 			childForceExpandWidth = false,
 			childForceExpandHeight = false,
 			childAlignment = "MiddleRight",
-			color = "red",
 		},
 		children = {
 			{
+				tag = "Text",
+				attributes = {
+					preferredHeight = rowHeight,
+					flexibleWidth = 1,
+					text = "Resource Tracker",
+					fontSize = 24 * uiQuality,
+					fontStyle = "Bold",
+					textColor = "black",
+				},
+			},
+			{
 				tag = "Button",
 				attributes = {
-					preferredHeight = 36 * uiQuality,
-					preferredWidth = 36 * uiQuality,
+					preferredHeight = rowHeight,
+					preferredWidth = rowHeight,
 					text = state.isOpen and "▼" or "▶",
 					fontSize = 24 * uiQuality,
 					textColor = "black",
@@ -48,20 +56,25 @@ local function rebuildUi(state)
 				attributes = {
 					childForceExpandWidth = false,
 					childForceExpandHeight = false,
-					childAlignment = "MiddleRight",
-					color = "blue",
+					childAlignment = "MiddleLeft",
 				},
 				children = {
 					{
-						tag = "Button",
+						tag = "HorizontalLayout", -- padding
+						attributes = {
+							childForceExpandWidth = false,
+							childForceExpandHeight = false,
+							childAlignment = "MiddleLeft",
+							preferredWidth = 36 * uiQuality,
+						}
+					},
+					{
+						tag = "Text",
 						attributes = {
 							preferredHeight = rowHeight,
-							preferredWidth = 36 * uiQuality,
-							text = ">",
+							text = resource[1],
 							fontSize = 24 * uiQuality,
 							textColor = "black",
-							colors = "rgb(0.85,0.85,0.85)|rgb(0.95,0.95,0.95)|rgb(0.85,0.85,0.85)",
-							onClick = "onButtonClickOpen"
 						},
 					},
 
@@ -84,11 +97,12 @@ local function rebuildUi(state)
 					position = string.format(
 						"%f %f %f",
 						0,
-						-50 / objScale.z,
-						-10 / objScale.y
+						-50,
+						-100
 					),
-					scale = string.format("%f %f %f", -1.0 / objScale.x / uiQuality, -1.0 / objScale.z / uiQuality,
-						1.0 / objScale.y / uiQuality),
+					scale = string.format("%f %f %f", -1 / state.baseObjScale.x / uiQuality,
+						-1 / state.baseObjScale.z / uiQuality,
+						1 / state.baseObjScale.y / uiQuality),
 					childForceExpandWidth = true,
 					childForceExpandHeight = false,
 					childAlignment = "UpperLeft",
