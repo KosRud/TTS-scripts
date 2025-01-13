@@ -10,7 +10,19 @@ end
 function Array:map(func)
 	local result = self:new()
 	for i, value in ipairs(self) do
-		result[i] = func(value, i, self)
+		result:push(
+			func(value, i, self)
+		)
+	end
+	return result
+end
+
+function Array:filter(func)
+	local result = self:new()
+	for i, value in ipairs(self) do
+		if func(value, i, self) then
+			result:push(value)
+		end
 	end
 	return result
 end
@@ -41,11 +53,14 @@ function Array:unshift(...)
 end
 
 function Array:concat(...)
-	local result = Array:new()
+	local result = self:new()
 	local args = { ... }
+	for _, value in ipairs(self) do
+		result:push(value)
+	end
 	for _, tbl in ipairs(args) do
 		for _, value in ipairs(tbl) do
-			result.insert(self, value)
+			result:push(value)
 		end
 	end
 	return result
