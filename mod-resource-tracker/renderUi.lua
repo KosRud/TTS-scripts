@@ -1,22 +1,30 @@
 local Array = require("lib-array/Array")
 local Object = require("lib-array/Object")
 
-local jsonInput = ""
+local UI_QUALITY = 3
+local BASE_OBJ_SCALE = {
+	x = 5,
+	y = 0.1,
+	z = 1
+}
 
-local UI_QUALITY = 4
+local jsonInput = ""
+local uiElementIds = {
+	json = "json",
+}
+
 local ROW_HEIGHT = 36 * UI_QUALITY
 local SPACING = 12 * UI_QUALITY
 local SPACING_S = 6 * UI_QUALITY
 local UI_HEIGHT_CLOSED = 100 * UI_QUALITY
+local UI_WIDTH = 100 * BASE_OBJ_SCALE.x * UI_QUALITY
 local RESOURCE_COUNT_MIN_WIDTH = 30 * UI_QUALITY
 local LINE_WIDTH = 4 * UI_QUALITY
 
 local HEADER_PADDING = 12 * UI_QUALITY
 local FOOTER_PADDING = SPACING_S
 
-local uiElementIds = {
-	json = "json",
-}
+
 
 local function uiMain(state)
 	local resources = Object.entries(state.data.resources)
@@ -96,7 +104,7 @@ local function uiMain(state)
 					tag = "Button",
 					attributes = {
 						preferredHeight = ROW_HEIGHT,
-						preferredWidth = 500,
+						preferredWidth = 144 * UI_QUALITY,
 						text = "Reset",
 						fontSize = 24 * UI_QUALITY,
 						textColor = "black",
@@ -144,7 +152,7 @@ local function uiMain(state)
 							alignment = "MiddleRight",
 							text = resource[1] .. ":",
 							resizeTextForBestFit = true,
-							resizeTextMaxSize = 24 * UI_QUALITY,
+							resizeTextMaxSize = 22 * UI_QUALITY,
 							resizeTextMinSize = 0,
 							textColor = "black",
 						},
@@ -253,7 +261,7 @@ local function uiMain(state)
 				tag = "VerticalLayout",
 				attributes = {
 					height = state.isOpen and uiHeight or UI_HEIGHT_CLOSED,
-					width = 400 * UI_QUALITY,
+					width = UI_WIDTH,
 					rectAlignment = "UpperCenter",
 					rotation = "0, 0, 0",
 					position = string.format(
@@ -262,9 +270,9 @@ local function uiMain(state)
 						-50,
 						-100
 					),
-					scale = string.format("%f %f %f", -1 / state.baseObjScale.x / UI_QUALITY,
-						-1 / state.baseObjScale.z / UI_QUALITY,
-						1 / state.baseObjScale.y / UI_QUALITY),
+					scale = string.format("%f %f %f", -1 / BASE_OBJ_SCALE.x / UI_QUALITY,
+						-1 / BASE_OBJ_SCALE.z / UI_QUALITY,
+						1 / BASE_OBJ_SCALE.y / UI_QUALITY),
 					childForceExpandWidth = true,
 					childForceExpandHeight = false,
 					childAlignment = "UpperLeft",
@@ -283,7 +291,7 @@ local function uiFlip(state)
 			tag = "VerticalLayout",
 			attributes = {
 				height = 400 * UI_QUALITY,
-				width = 400 * UI_QUALITY,
+				width = UI_WIDTH,
 				rectAlignment = "UpperCenter",
 				rotation = "180, 0, 0",
 				position = string.format(
@@ -292,9 +300,9 @@ local function uiFlip(state)
 					-50,
 					100
 				),
-				scale = string.format("%f %f %f", 1 / state.baseObjScale.x / UI_QUALITY,
-					1 / state.baseObjScale.z / UI_QUALITY,
-					1 / state.baseObjScale.y / UI_QUALITY),
+				scale = string.format("%f %f %f", 1 / BASE_OBJ_SCALE.x / UI_QUALITY,
+					1 / BASE_OBJ_SCALE.z / UI_QUALITY,
+					1 / BASE_OBJ_SCALE.y / UI_QUALITY),
 				childForceExpandWidth = true,
 				childForceExpandHeight = false,
 				childAlignment = "UpperLeft",

@@ -1,38 +1,14 @@
-local rebuildUi = require("mod-resource-tracker/rebuildUi")
+local renderUi = require("mod-resource-tracker/renderUi")
+local stateDefault = require("mod-resource-tracker/defaultState")
 
-local state = {
-	data = {
-		resources = {
-			["spell slot (level 1)"] = {
-				max = 4,
-				current = 4
-			},
-			["spell slot (level 2)"] = {
-				max = 3,
-				current = 3
-			},
-			["spell slot (level 3)"] = {
-				max = 2,
-				current = 2
-			}
-		}
-	},
-	isOpen = true,
-	baseObjScale = {
-		x = 4,
-		y = 0.1,
-		z = 1
-	},
-	isFlipped = false,
-}
-
-
+state = stateDefault
 
 function onLoad(savedState)
 	if savedState and savedState ~= "" then
 		state = JSON.decode(savedState)
 	end
-	rebuildUi(state)
+	renderUi(state)
+	return JSON.encode(state)
 end
 
 function onSave()
@@ -44,5 +20,5 @@ function onRotate(spin, flip, player_color, old_spin, old_flip)
 		return
 	end
 	state.isFlipped = math.abs(flip - 180) < 90
-	rebuildUi(state)
+	renderUi(state)
 end
