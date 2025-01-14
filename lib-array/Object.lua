@@ -1,4 +1,4 @@
-local Array = require("lib-array/Array")
+local Array = require("lib-array.Array")
 
 local Object = {}
 
