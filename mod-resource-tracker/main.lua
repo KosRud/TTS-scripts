@@ -1,24 +1,22 @@
-local stateDefault = require("mod-resource-tracker/defaultState")
-rebuildUi = require("mod-resource-tracker/ui")
-
-state = stateDefault
+RebuildUi = require("mod-resource-tracker/ui/ui")
+State = require("mod-resource-tracker/defaultState")
 
 function onLoad(savedState)
 	if savedState and savedState ~= "" then
-		state = JSON.decode(savedState)
+		State = JSON.decode(savedState)
 	end
-	rebuildUi(state)
-	return JSON.encode(state)
+	RebuildUi()
+	return JSON.encode(State)
 end
 
 function onSave()
-	return JSON.encode(state)
+	return JSON.encode(State)
 end
 
 function onRotate(spin, flip, player_color, old_spin, old_flip)
 	if math.abs(flip - old_flip) < 10 then
 		return
 	end
-	state.isFlipped = math.abs(flip - 180) < 90
-	rebuildUi(state)
+	State.isFlipped = math.abs(flip - 180) < 90
+	RebuildUi()
 end

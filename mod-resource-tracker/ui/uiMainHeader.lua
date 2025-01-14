@@ -1,5 +1,5 @@
 local Array = require("lib-array/Array")
-local uiConstants = require("mod-resource-tracker/uiConstants")
+local uiConstants = require("mod-resource-tracker/ui/uiConstants")
 
 local function makeHeader()
 	return Array:new({
@@ -7,7 +7,7 @@ local function makeHeader()
 			tag = "HorizontalLayout",
 			attributes = {
 				preferredHeight = uiConstants.ROW_HEIGHT + uiConstants.HEADER_PADDING * 2,
-				flexibleHeight = state.isOpen and 0 or 1,
+				flexibleHeight = State.isOpen and 0 or 1,
 				childForceExpandWidth = false,
 				childForceExpandHeight = false,
 				childAlignment = "MiddleRight",
@@ -37,7 +37,7 @@ local function makeHeader()
 					attributes = {
 						preferredHeight = uiConstants.ROW_HEIGHT,
 						preferredWidth = uiConstants.ROW_HEIGHT,
-						text = state.isOpen and "▼" or "▶",
+						text = State.isOpen and "▼" or "▶",
 						fontSize = 24 * uiConstants.UI_QUALITY,
 						textColor = "black",
 						colors = "rgb(0.85,0.85,0.85)|rgb(0.95,0.95,0.95)|rgb(0.85,0.85,0.85)",
@@ -51,8 +51,8 @@ local function makeHeader()
 end
 
 function onButtonClickOpen()
-	state.isOpen = not state.isOpen
-	rebuildUi(state)
+	State.isOpen = not State.isOpen
+	RebuildUi()
 end
 
 return makeHeader

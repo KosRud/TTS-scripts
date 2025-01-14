@@ -1,6 +1,6 @@
 local Array = require("lib-array/Array")
 local Object = require("lib-array/Object")
-local uiConstants = require("mod-resource-tracker/uiConstants")
+local uiConstants = require("mod-resource-tracker/ui/uiConstants")
 
 local function makeResourceRow(resource, resourceId)
 	return ({
@@ -89,8 +89,6 @@ local function makeResourceRow(resource, resourceId)
 					preferredWidth = uiConstants.ROW_HEIGHT,
 					text = "-",
 					fontSize = 24 * uiConstants.UI_QUALITY,
-					textColor = "black",
-					colors = "rgb(0.85,0.85,0.85)|rgb(0.95,0.95,0.95)|rgb(0.85,0.85,0.85)",
 					onClick = string.format("onButtonClickResourceMinus(%d)", resourceId)
 				},
 			},
@@ -110,8 +108,6 @@ local function makeResourceRow(resource, resourceId)
 					preferredWidth = uiConstants.ROW_HEIGHT,
 					text = "+",
 					fontSize = 24 * uiConstants.UI_QUALITY,
-					textColor = "black",
-					colors = "rgb(0.85,0.85,0.85)|rgb(0.95,0.95,0.95)|rgb(0.85,0.85,0.85)",
 					onClick = string.format("onButtonClickResourcePlus(%d)", resourceId)
 				},
 			},
@@ -130,16 +126,16 @@ end
 
 function onButtonClickResourceMinus(_, resourceIdStr)
 	local resourceId = tonumber(resourceIdStr)
-	local resource = Object.entries(state.data.resources)[resourceId][2]
+	local resource = Object.entries(State.data.resources)[resourceId][2]
 	resource.current = math.max(resource.current - 1, 0)
-	rebuildUi(state)
+	RebuildUi(State)
 end
 
 function onButtonClickResourcePlus(_, resourceIdStr)
 	local resourceId = tonumber(resourceIdStr)
-	local resource = Object.entries(state.data.resources)[resourceId][2]
+	local resource = Object.entries(State.data.resources)[resourceId][2]
 	resource.current = math.min(resource.current + 1, resource.max)
-	rebuildUi(state)
+	RebuildUi(State)
 end
 
 return makeResourceRow

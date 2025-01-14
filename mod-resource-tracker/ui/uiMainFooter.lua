@@ -1,8 +1,8 @@
 local Array = require("lib-array/Array")
-local uiConstants = require("mod-resource-tracker/uiConstants")
+local uiConstants = require("mod-resource-tracker/ui/uiConstants")
 
 local function makeFooter()
-	return state.isOpen and Array:new({
+	return State.isOpen and Array:new({
 		{
 			tag = "HorizontalLayout",
 			attributes = {
@@ -25,8 +25,6 @@ local function makeFooter()
 						preferredWidth = 144 * uiConstants.UI_QUALITY,
 						text = "Reset",
 						fontSize = 24 * uiConstants.UI_QUALITY,
-						textColor = "black",
-						colors = "rgb(0.85,0.85,0.85)|rgb(0.95,0.95,0.95)|rgb(0.85,0.85,0.85)",
 						onClick = "onButtonClickReset"
 					},
 				},
@@ -45,10 +43,10 @@ local function makeFooter()
 end
 
 function onButtonClickReset()
-	for k, v in pairs(state.data.resources) do
+	for k, v in pairs(State.data.resources) do
 		v.current = v.max
 	end
-	rebuildUi(state)
+	RebuildUi(State)
 end
 
 return makeFooter

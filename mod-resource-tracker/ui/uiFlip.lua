@@ -1,5 +1,5 @@
 local Array = require("lib-array/Array")
-local uiConstants = require("mod-resource-tracker/uiConstants")
+local uiConstants = require("mod-resource-tracker/ui/uiConstants")
 
 local jsonInput = ""
 
@@ -103,8 +103,6 @@ local function makeUiFlip()
 										preferredWidth = 288,
 										text = "Load",
 										fontSize = 18 * uiConstants.UI_QUALITY,
-										textColor = "black",
-										colors = "rgb(0.85,0.85,0.85)|rgb(0.95,0.95,0.95)|rgb(0.85,0.85,0.85)",
 										onClick = "onButtonClickJsonLoad"
 									},
 								},
@@ -114,8 +112,6 @@ local function makeUiFlip()
 										preferredWidth = 288,
 										text = "Save",
 										fontSize = 18 * uiConstants.UI_QUALITY,
-										textColor = "black",
-										colors = "rgb(0.85,0.85,0.85)|rgb(0.95,0.95,0.95)|rgb(0.85,0.85,0.85)",
 										onClick = "onButtonClickJsonSave"
 									},
 								},
@@ -133,13 +129,13 @@ function onButtonClickJsonLoad()
 		uiConstants.ELEMENT_IDS.json,
 		"text",
 		"\r" .. -- bugs if the first character is "{"
-		JSON.encode_pretty(state.data)
+		JSON.encode_pretty(State.data)
 	)
 end
 
 function onButtonClickJsonSave()
-	state.data = JSON.decode(jsonInput)
-	rebuildUi(state)
+	State.data = JSON.decode(jsonInput)
+	RebuildUi(State)
 	onButtonClickJsonLoad()
 end
 

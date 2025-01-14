@@ -1,13 +1,13 @@
 local Array = require("lib-array/Array")
 local Object = require("lib-array/Object")
-local uiConstants = require("mod-resource-tracker/uiConstants")
-local makeHeader = require("mod-resource-tracker/uiMainHeader")
-local makeFooter = require("mod-resource-tracker/uiMainFooter")
-local makeResourceRow = require("mod-resource-tracker/uiMainResourceRow")
+local uiConstants = require("mod-resource-tracker/ui/uiConstants")
+local makeHeader = require("mod-resource-tracker/ui/uiMainHeader")
+local makeFooter = require("mod-resource-tracker/ui/uiMainFooter")
+local makeResourceRow = require("mod-resource-tracker/ui/uiMainResourceRow")
 
 local function makeUiMain()
-	local resources = Object.entries(state.data.resources)
-	local rows = state.isOpen and resources:map(makeResourceRow) or Array:new()
+	local resources = Object.entries(State.data.resources)
+	local rows = State.isOpen and resources:map(makeResourceRow) or Array:new()
 
 	local uiHeight = math.max(
 		uiConstants.UI_HEIGHT_CLOSED,
@@ -21,7 +21,7 @@ local function makeUiMain()
 	local header = makeHeader()
 	local footer = makeFooter()
 
-	local rows = state.isOpen and resources:map(makeResourceRow) or Array:new()
+	local rows = State.isOpen and resources:map(makeResourceRow) or Array:new()
 
 	rows = header:concat(rows, footer)
 
@@ -30,7 +30,7 @@ local function makeUiMain()
 			{
 				tag = "VerticalLayout",
 				attributes = {
-					height = state.isOpen and uiHeight or uiConstants.UI_HEIGHT_CLOSED,
+					height = State.isOpen and uiHeight or uiConstants.UI_HEIGHT_CLOSED,
 					width = uiConstants.UI_WIDTH,
 					rectAlignment = "UpperCenter",
 					rotation = "0, 0, 0",
