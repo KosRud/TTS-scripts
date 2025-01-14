@@ -3,7 +3,7 @@ local Object = require("lib-array/Object")
 local makeHeader = require("mod-music-manager/ui/uiMainHeader")
 
 local function makeUiMain()
-	local uiVars = State.uiVars
+	local uiVars = TransientState.uiVars
 
 	return (
 		{
@@ -41,7 +41,6 @@ local function makeUiMain()
 						children = {
 							{
 								tag = "VerticalScrollView",
-								-- tag = "VerticalLayout",
 								attributes = {
 									preferredWidth = 216 * uiVars.QUALITY,
 									flexibleWidth = 0,
@@ -53,24 +52,35 @@ local function makeUiMain()
 									{
 										tag = "VerticalLayout",
 										attributes = {
-											color = "black",
-											preferredWidth = 216 * uiVars.QUALITY,
-											preferredHeight = 216 * uiVars.QUALITY,
-											minHeight = 216 * uiVars.QUALITY,
-											minWidth = 216 * uiVars.QUALITY,
+											childForceExpandHeight = false,
+											childForceExpandWidth = true,
+											height = 2000 * uiVars.QUALITY -- must calculate
 										},
 										children = {
 											{
-												tag = "Text",
+												tag = "VerticalLayout",
 												attributes = {
-													flexibleWidth = 1,
-													preferredHeight = 128 * uiVars.QUALITY,
-													text = "Music Manager",
-													fontSize = 24 * uiVars.QUALITY,
-													fontStyle = "Bold",
+													preferredHeight = 216 * uiVars.QUALITY,
+													color = "blue"
+												},
+												children = {}
+											},
+											{
+												tag = "VerticalLayout",
+												attributes = {
+													preferredHeight = 216 * uiVars.QUALITY,
 													color = "red"
 												},
-											}
+												children = {}
+											},
+											{
+												tag = "VerticalLayout",
+												attributes = {
+													preferredHeight = 216 * uiVars.QUALITY,
+													color = "green"
+												},
+												children = {}
+											},
 										}
 									},
 								}

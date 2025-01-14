@@ -16,7 +16,6 @@ return {
 			}
 		}
 	},
-	uiVars = {},
 	-------------------------
 	isOpen = true,
 	isFlipped = false,

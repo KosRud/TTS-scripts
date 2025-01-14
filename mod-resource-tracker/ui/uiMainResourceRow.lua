@@ -2,7 +2,7 @@ local Array = require("lib-array/Array")
 local Object = require("lib-array/Object")
 
 local function makeResourceRow(resource, resourceId)
-	local uiVars = State.uiVars
+	local uiVars = TransientState.uiVars
 
 	return ({
 		tag = "HorizontalLayout",

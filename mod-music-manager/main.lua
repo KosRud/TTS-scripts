@@ -1,5 +1,6 @@
 RebuildUi = require("mod-music-manager/ui/ui")
 State = require("mod-music-manager/defaultState")
+TransientState = {}
 
 function onLoad(savedState)
 	if savedState and savedState ~= "" then

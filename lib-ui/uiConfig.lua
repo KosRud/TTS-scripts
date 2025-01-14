@@ -1,27 +1,30 @@
 local Array = require("lib-array/Array")
 
 local jsonInput = ""
+local configUiParams = {}
 
-local function makeUiFlip()
-	local uiVars = State.uiVars
+local function makeUiConfig(params)
+	configUiParams = params
+
+	local spacing = 12 * params.QUALITY
 
 	return {
 		{
 			tag = "VerticalLayout",
 			attributes = {
-				height = uiVars.UI_HEIGHT,
-				width = uiVars.UI_WIDTH,
+				height = params.UI_HEIGHT or (400 * params.QUALITY),
+				width = params.UI_WIDTH,
 				rectAlignment = "UpperCenter",
-				rotation = "180, 0, 0",
+				rotation = "180, 180, 0",
 				position = string.format(
 					"%f %f %f",
 					0,
-					-50,
+					50,
 					100
 				),
-				scale = string.format("%f %f %f", 1 / uiVars.BASE_OBJ_SCALE.x / uiVars.QUALITY,
-					1 / uiVars.BASE_OBJ_SCALE.z / uiVars.QUALITY,
-					1 / uiVars.BASE_OBJ_SCALE.y / uiVars.QUALITY),
+				scale = string.format("%f %f %f", 1 / params.BASE_OBJ_SCALE.x / params.QUALITY,
+					1 / params.BASE_OBJ_SCALE.z / params.QUALITY,
+					1 / params.BASE_OBJ_SCALE.y / params.QUALITY),
 				childForceExpandWidth = true,
 				childForceExpandHeight = false,
 				childAlignment = "UpperLeft",
@@ -30,7 +33,7 @@ local function makeUiFlip()
 					0,
 					0,
 					0,
-					uiVars.SPACING
+					12 * params.QUALITY
 				),
 				color = "white",
 			},
@@ -38,10 +41,10 @@ local function makeUiFlip()
 				{
 					tag = "Text",
 					attributes = {
-						preferredHeight = 64 * uiVars.QUALITY,
+						preferredHeight = 64 * params.QUALITY,
 						flexibleWidth = 1,
 						text = "Resource Tracker",
-						fontSize = 24 * uiVars.QUALITY,
+						fontSize = 24 * params.QUALITY,
 						fontStyle = "Bold",
 					},
 				},
@@ -52,11 +55,11 @@ local function makeUiFlip()
 						childForceExpandHeight = false,
 						flexibleHeight = 1,
 						childAlignment = "MiddleCenter",
-						spacing = uiVars.SPACING,
+						spacing = spacing,
 						padding = string.format(
 							"%s %s %s %s",
-							uiVars.SPACING,
-							uiVars.SPACING,
+							spacing,
+							spacing,
 							0,
 							0
 						),
@@ -74,10 +77,10 @@ local function makeUiFlip()
 							children = {
 								tag = "InputField",
 								attributes = {
-									id = uiVars.ELEMENT_IDS.json,
+									id = "json",
 									preferredHeight = 0,
 									flexibleHeight = 1,
-									fontSize = 12 * uiVars.QUALITY,
+									fontSize = 12 * params.QUALITY,
 									lineType = "MultiLineNewLine",
 									onValueChanged = "onJsonInputEdit"
 								}
@@ -88,27 +91,27 @@ local function makeUiFlip()
 							attributes = {
 								childForceExpandWidth = false,
 								childForceExpandHeight = true,
-								preferredHeight = 32 * uiVars.QUALITY,
+								preferredHeight = 32 * params.QUALITY,
 								flexibleHeight = 0,
 								childAlignment = "MiddleRight",
-								spacing = uiVars.SPACING,
+								spacing = spacing,
 							},
 							children = {
 								{
 									tag = "Button",
 									attributes = {
-										preferredWidth = 108 * uiVars.QUALITY,
+										preferredWidth = 108 * params.QUALITY,
 										text = "Load",
-										fontSize = 18 * uiVars.QUALITY,
+										fontSize = 18 * params.QUALITY,
 										onClick = "onButtonClickJsonLoad"
 									},
 								},
 								{
 									tag = "Button",
 									attributes = {
-										preferredWidth = 108 * uiVars.QUALITY,
+										preferredWidth = 108 * params.QUALITY,
 										text = "Save",
-										fontSize = 18 * uiVars.QUALITY,
+										fontSize = 18 * params.QUALITY,
 										onClick = "onButtonClickJsonSave"
 									},
 								},
@@ -122,16 +125,20 @@ local function makeUiFlip()
 end
 
 function onButtonClickJsonLoad()
+	config = configUiParams.getConfig()
+
 	self.UI.setAttribute(
-		State.uiVars.ELEMENT_IDS.json,
+		TransientState.uiVars.ELEMENT_IDS.json,
 		"text",
 		"\r" .. -- bugs if the first character is "{"
-		JSON.encode_pretty(State.config)
+		JSON.encode_pretty(config)
 	)
 end
 
 function onButtonClickJsonSave()
-	State.config = JSON.decode(jsonInput)
+	local config = JSON.decode(jsonInput)
+
+	configUiParams.setConfig(config)
 	RebuildUi()
 	onButtonClickJsonLoad()
 end
@@ -140,4 +147,4 @@ function onJsonInputEdit(_, value)
 	jsonInput = value
 end
 
-return makeUiFlip
+return makeUiConfig

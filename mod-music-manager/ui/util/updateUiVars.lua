@@ -20,7 +20,20 @@ function updateUiVars()
 		json = "json",
 	}
 
-	State.uiVars = uiVars
+	uiVars.CONFIG_UI_PARAMS = {
+		getConfig = function()
+			return State.config
+		end,
+		setConfig = function(config)
+			State.config = config
+		end,
+		UI_WIDTH = uiVars.UI_WIDTH,
+		UI_HEIGHT = uiVars.UI_HEIGHT,
+		QUALITY = uiVars.QUALITY,
+		BASE_OBJ_SCALE = uiVars.BASE_OBJ_SCALE
+	}
+
+	TransientState.uiVars = uiVars
 end
 
 return updateUiVars

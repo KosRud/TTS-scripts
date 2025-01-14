@@ -1,7 +1,7 @@
 local Array = require("lib-array/Array")
 
 local function makeFooter()
-	local uiVars = State.uiVars
+	local uiVars = TransientState.uiVars
 
 	return State.isOpen and Array:new({
 		{

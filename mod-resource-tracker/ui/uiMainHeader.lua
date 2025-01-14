@@ -1,7 +1,7 @@
 local Array = require("lib-array/Array")
 
 local function makeHeader()
-	local uiVars = State.uiVars
+	local uiVars = TransientState.uiVars
 
 	return Array:new({
 		{

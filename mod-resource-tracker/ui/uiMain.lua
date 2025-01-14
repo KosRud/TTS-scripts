@@ -5,7 +5,7 @@ local makeFooter = require("mod-resource-tracker/ui/uiMainFooter")
 local makeResourceRow = require("mod-resource-tracker/ui/uiMainResourceRow")
 
 local function makeUiMain()
-	local uiVars = State.uiVars
+	local uiVars = TransientState.uiVars
 
 	local resources = Object.entries(State.config.resources)
 	local rows = State.isOpen and resources:map(makeResourceRow) or Array:new()
