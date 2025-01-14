@@ -17,12 +17,12 @@ local function makeUiMain()
 					position = string.format(
 						"%f %f %f",
 						0,
-						-50,
+						50,
 						-100
 					),
 					scale = string.format("%f %f %f", 1 / uiVars.BASE_OBJ_SCALE.x / uiVars.QUALITY,
 						1 / uiVars.BASE_OBJ_SCALE.z / uiVars.QUALITY,
-						-1 / uiVars.BASE_OBJ_SCALE.y / uiVars.QUALITY),
+						1 / uiVars.BASE_OBJ_SCALE.y / uiVars.QUALITY),
 					childForceExpandWidth = true,
 					childForceExpandHeight = false,
 					childAlignment = "UpperLeft",
