@@ -1,5 +1,6 @@
 return {
-	data = {
+	config = {
+		uiQuality = 3,
 		resources = {
 			["spell slot (level 1)"] = {
 				max = 4,
@@ -15,6 +16,8 @@ return {
 			}
 		}
 	},
+	uiVars = {},
+	-------------------------
 	isOpen = true,
 	isFlipped = false,
 }

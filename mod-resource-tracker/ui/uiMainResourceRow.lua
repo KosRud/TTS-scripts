@@ -1,8 +1,9 @@
 local Array = require("lib-array/Array")
 local Object = require("lib-array/Object")
-local uiConstants = require("mod-resource-tracker/ui/uiConstants")
 
 local function makeResourceRow(resource, resourceId)
+	local uiVars = State.uiVars
+
 	return ({
 		tag = "HorizontalLayout",
 		attributes = {
@@ -17,18 +18,18 @@ local function makeResourceRow(resource, resourceId)
 					childForceExpandWidth = false,
 					childForceExpandHeight = false,
 					childAlignment = "MiddleLeft",
-					preferredWidth = uiConstants.SPACING,
+					preferredWidth = uiVars.SPACING,
 				}
 			},
 			{
 				tag = "Text",
 				attributes = {
-					preferredHeight = uiConstants.ROW_HEIGHT,
+					preferredHeight = uiVars.ROW_HEIGHT,
 					flexibleWidth = 1,
 					alignment = "MiddleRight",
 					text = resource[1] .. ":",
 					resizeTextForBestFit = true,
-					resizeTextMaxSize = 22 * uiConstants.UI_QUALITY,
+					resizeTextMaxSize = 22 * uiVars.QUALITY,
 					resizeTextMinSize = 0,
 					textColor = "black",
 				},
@@ -39,37 +40,37 @@ local function makeResourceRow(resource, resourceId)
 					childForceExpandWidth = false,
 					childForceExpandHeight = false,
 					childAlignment = "MiddleLeft",
-					preferredWidth = uiConstants.SPACING,
+					preferredWidth = uiVars.SPACING,
 				}
 			},
 			{
 				tag = "Text",
 				attributes = {
-					preferredHeight = uiConstants.ROW_HEIGHT,
-					minWidth = uiConstants.RESOURCE_COUNT_MIN_WIDTH,
+					preferredHeight = uiVars.ROW_HEIGHT,
+					minWidth = uiVars.RESOURCE_COUNT_MIN_WIDTH,
 					text = resource[2].current,
 					alignment = "MiddleRight",
-					fontSize = 24 * uiConstants.UI_QUALITY,
+					fontSize = 24 * uiVars.QUALITY,
 					textColor = "black",
 				},
 			},
 			{
 				tag = "Text",
 				attributes = {
-					preferredHeight = uiConstants.ROW_HEIGHT,
+					preferredHeight = uiVars.ROW_HEIGHT,
 					text = " / ",
-					fontSize = 24 * uiConstants.UI_QUALITY,
+					fontSize = 24 * uiVars.QUALITY,
 					textColor = "black",
 				},
 			},
 			{
 				tag = "Text",
 				attributes = {
-					preferredHeight = uiConstants.ROW_HEIGHT,
-					minWidth = uiConstants.RESOURCE_COUNT_MIN_WIDTH,
+					preferredHeight = uiVars.ROW_HEIGHT,
+					minWidth = uiVars.RESOURCE_COUNT_MIN_WIDTH,
 					alignment = "MiddleLeft",
 					text = resource[2].max,
-					fontSize = 24 * uiConstants.UI_QUALITY,
+					fontSize = 24 * uiVars.QUALITY,
 					textColor = "black",
 				},
 			},
@@ -79,16 +80,16 @@ local function makeResourceRow(resource, resourceId)
 					childForceExpandWidth = false,
 					childForceExpandHeight = false,
 					childAlignment = "MiddleLeft",
-					preferredWidth = uiConstants.SPACING,
+					preferredWidth = uiVars.SPACING,
 				}
 			},
 			{
 				tag = "Button",
 				attributes = {
-					preferredHeight = uiConstants.ROW_HEIGHT,
-					preferredWidth = uiConstants.ROW_HEIGHT,
+					preferredHeight = uiVars.ROW_HEIGHT,
+					preferredWidth = uiVars.ROW_HEIGHT,
 					text = "-",
-					fontSize = 24 * uiConstants.UI_QUALITY,
+					fontSize = 24 * uiVars.QUALITY,
 					onClick = string.format("onButtonClickResourceMinus(%d)", resourceId)
 				},
 			},
@@ -98,16 +99,16 @@ local function makeResourceRow(resource, resourceId)
 					childForceExpandWidth = false,
 					childForceExpandHeight = false,
 					childAlignment = "MiddleLeft",
-					preferredWidth = uiConstants.SPACING_S,
+					preferredWidth = uiVars.SPACING_S,
 				}
 			},
 			{
 				tag = "Button",
 				attributes = {
-					preferredHeight = uiConstants.ROW_HEIGHT,
-					preferredWidth = uiConstants.ROW_HEIGHT,
+					preferredHeight = uiVars.ROW_HEIGHT,
+					preferredWidth = uiVars.ROW_HEIGHT,
 					text = "+",
-					fontSize = 24 * uiConstants.UI_QUALITY,
+					fontSize = 24 * uiVars.QUALITY,
 					onClick = string.format("onButtonClickResourcePlus(%d)", resourceId)
 				},
 			},
@@ -117,7 +118,7 @@ local function makeResourceRow(resource, resourceId)
 					childForceExpandWidth = false,
 					childForceExpandHeight = false,
 					childAlignment = "MiddleLeft",
-					preferredWidth = uiConstants.SPACING,
+					preferredWidth = uiVars.SPACING,
 				}
 			},
 		}
@@ -126,16 +127,16 @@ end
 
 function onButtonClickResourceMinus(_, resourceIdStr)
 	local resourceId = tonumber(resourceIdStr)
-	local resource = Object.entries(State.data.resources)[resourceId][2]
+	local resource = Object.entries(State.config.resources)[resourceId][2]
 	resource.current = math.max(resource.current - 1, 0)
-	RebuildUi(State)
+	RebuildUi()
 end
 
 function onButtonClickResourcePlus(_, resourceIdStr)
 	local resourceId = tonumber(resourceIdStr)
-	local resource = Object.entries(State.data.resources)[resourceId][2]
+	local resource = Object.entries(State.config.resources)[resourceId][2]
 	resource.current = math.min(resource.current + 1, resource.max)
-	RebuildUi(State)
+	RebuildUi()
 end
 
 return makeResourceRow

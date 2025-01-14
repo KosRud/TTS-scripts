@@ -1,7 +1,8 @@
 local Array = require("lib-array/Array")
-local uiConstants = require("mod-resource-tracker/ui/uiConstants")
 
 local function makeFooter()
+	local uiVars = State.uiVars
+
 	return State.isOpen and Array:new({
 		{
 			tag = "HorizontalLayout",
@@ -13,18 +14,18 @@ local function makeFooter()
 					"%s %s %s %s",
 					0,
 					0,
-					uiConstants.FOOTER_PADDING,
-					uiConstants.FOOTER_PADDING
+					uiVars.FOOTER_PADDING,
+					uiVars.FOOTER_PADDING
 				)
 			},
 			children = {
 				{
 					tag = "Button",
 					attributes = {
-						preferredHeight = uiConstants.ROW_HEIGHT,
-						preferredWidth = 144 * uiConstants.UI_QUALITY,
+						preferredHeight = uiVars.ROW_HEIGHT,
+						preferredWidth = 144 * uiVars.QUALITY,
 						text = "Reset",
-						fontSize = 24 * uiConstants.UI_QUALITY,
+						fontSize = 24 * uiVars.QUALITY,
 						onClick = "onButtonClickReset"
 					},
 				},
@@ -34,7 +35,7 @@ local function makeFooter()
 						childForceExpandWidth = false,
 						childForceExpandHeight = false,
 						childAlignment = "MiddleLeft",
-						preferredWidth = uiConstants.SPACING,
+						preferredWidth = uiVars.SPACING,
 					}
 				},
 			}
@@ -43,10 +44,10 @@ local function makeFooter()
 end
 
 function onButtonClickReset()
-	for k, v in pairs(State.data.resources) do
+	for k, v in pairs(State.config.resources) do
 		v.current = v.max
 	end
-	RebuildUi(State)
+	RebuildUi()
 end
 
 return makeFooter
