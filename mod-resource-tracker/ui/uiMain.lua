@@ -39,10 +39,10 @@ local function makeUiMain()
 						"%f %f %f",
 						0,
 						-50,
-						-100
+						-10
 					),
-					scale = string.format("%f %f %f", -1 / uiVars.BASE_OBJ_SCALE.x / uiVars.QUALITY,
-						-1 / uiVars.BASE_OBJ_SCALE.z / uiVars.QUALITY,
+					scale = string.format("%f %f %f", 1 / uiVars.BASE_OBJ_SCALE.x / uiVars.QUALITY,
+						1 / uiVars.BASE_OBJ_SCALE.z / uiVars.QUALITY,
 						1 / uiVars.BASE_OBJ_SCALE.y / uiVars.QUALITY),
 					childForceExpandWidth = true,
 					childForceExpandHeight = false,

@@ -18,7 +18,7 @@ return {
 		{
 			tag = "Text",
 			attributes = {
-				textColor = "black"
+				color = "black"
 			}
 		}
 	}

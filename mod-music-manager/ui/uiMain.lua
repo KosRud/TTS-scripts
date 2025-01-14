@@ -20,9 +20,9 @@ local function makeUiMain()
 						-50,
 						-100
 					),
-					scale = string.format("%f %f %f", -1 / uiVars.BASE_OBJ_SCALE.x / uiVars.QUALITY,
-						-1 / uiVars.BASE_OBJ_SCALE.z / uiVars.QUALITY,
-						1 / uiVars.BASE_OBJ_SCALE.y / uiVars.QUALITY),
+					scale = string.format("%f %f %f", 1 / uiVars.BASE_OBJ_SCALE.x / uiVars.QUALITY,
+						1 / uiVars.BASE_OBJ_SCALE.z / uiVars.QUALITY,
+						-1 / uiVars.BASE_OBJ_SCALE.y / uiVars.QUALITY),
 					childForceExpandWidth = true,
 					childForceExpandHeight = false,
 					childAlignment = "UpperLeft",
@@ -41,26 +41,34 @@ local function makeUiMain()
 						children = {
 							{
 								tag = "VerticalScrollView",
+								-- tag = "VerticalLayout",
 								attributes = {
 									preferredWidth = 216 * uiVars.QUALITY,
+									flexibleWidth = 0,
 									scrollbarColors = "yellow | red | green | blue",
+									verticalScrollbarVisibility = "Permanent",
+									color = "green",
 								},
 								children = {
 									{
-										tag = "Panel",
+										tag = "VerticalLayout",
 										attributes = {
 											color = "black",
-											preferredHeight = 100 * uiVars.QUALITY,
-											preferredWidth = 100 * uiVars.QUALITY,
+											preferredWidth = 216 * uiVars.QUALITY,
+											preferredHeight = 216 * uiVars.QUALITY,
+											minHeight = 216 * uiVars.QUALITY,
+											minWidth = 216 * uiVars.QUALITY,
 										},
 										children = {
 											{
 												tag = "Text",
 												attributes = {
 													flexibleWidth = 1,
+													preferredHeight = 128 * uiVars.QUALITY,
 													text = "Music Manager",
 													fontSize = 24 * uiVars.QUALITY,
 													fontStyle = "Bold",
+													color = "red"
 												},
 											}
 										}
