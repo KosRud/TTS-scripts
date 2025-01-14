@@ -30,7 +30,6 @@ local function makeHeader()
 						text = "Resource Tracker",
 						fontSize = 24 * uiVars.QUALITY,
 						fontStyle = "Bold",
-						textColor = "black",
 					},
 				},
 				{
@@ -40,8 +39,6 @@ local function makeHeader()
 						preferredWidth = uiVars.ROW_HEIGHT,
 						text = State.isOpen and "▼" or "▶",
 						fontSize = 24 * uiVars.QUALITY,
-						textColor = "black",
-						colors = "rgb(0.85,0.85,0.85)|rgb(0.95,0.95,0.95)|rgb(0.85,0.85,0.85)",
 						onClick = "onButtonClickOpen(1)"
 					},
 				},

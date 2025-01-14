@@ -9,7 +9,7 @@ local function makeUiFlip()
 		{
 			tag = "VerticalLayout",
 			attributes = {
-				height = 400 * uiVars.QUALITY,
+				height = uiVars.UI_HEIGHT,
 				width = uiVars.UI_WIDTH,
 				rectAlignment = "UpperCenter",
 				rotation = "180, 0, 0",
@@ -25,7 +25,6 @@ local function makeUiFlip()
 				childForceExpandWidth = true,
 				childForceExpandHeight = false,
 				childAlignment = "UpperLeft",
-				spacing = uiVars.SPACING,
 				padding = string.format(
 					"%s %s %s %s",
 					0,
@@ -39,7 +38,7 @@ local function makeUiFlip()
 				{
 					tag = "Text",
 					attributes = {
-						preferredHeight = uiVars.ROW_HEIGHT,
+						preferredHeight = 64 * uiVars.QUALITY,
 						flexibleWidth = 1,
 						text = "Resource Tracker",
 						fontSize = 24 * uiVars.QUALITY,
@@ -78,11 +77,8 @@ local function makeUiFlip()
 									id = uiVars.ELEMENT_IDS.json,
 									preferredHeight = 0,
 									flexibleHeight = 1,
-									fontSize = uiVars.SPACING,
-									colors =
-									"rgba(0.7,0.7,0.7,1)|rgba(0.8,0.8,0.8,1)|rgba(0.8,0.8,0.8,1)|rgba(0.4,0.4,0.4,1)",
+									fontSize = 12 * uiVars.QUALITY,
 									lineType = "MultiLineNewLine",
-									characterLimit = 0,
 									onValueChanged = "onJsonInputEdit"
 								}
 							}

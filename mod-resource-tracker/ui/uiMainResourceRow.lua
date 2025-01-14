@@ -31,7 +31,6 @@ local function makeResourceRow(resource, resourceId)
 					resizeTextForBestFit = true,
 					resizeTextMaxSize = 22 * uiVars.QUALITY,
 					resizeTextMinSize = 0,
-					textColor = "black",
 				},
 			},
 			{
@@ -51,7 +50,6 @@ local function makeResourceRow(resource, resourceId)
 					text = resource[2].current,
 					alignment = "MiddleRight",
 					fontSize = 24 * uiVars.QUALITY,
-					textColor = "black",
 				},
 			},
 			{
@@ -60,7 +58,6 @@ local function makeResourceRow(resource, resourceId)
 					preferredHeight = uiVars.ROW_HEIGHT,
 					text = " / ",
 					fontSize = 24 * uiVars.QUALITY,
-					textColor = "black",
 				},
 			},
 			{
@@ -71,7 +68,6 @@ local function makeResourceRow(resource, resourceId)
 					alignment = "MiddleLeft",
 					text = resource[2].max,
 					fontSize = 24 * uiVars.QUALITY,
-					textColor = "black",
 				},
 			},
 			{

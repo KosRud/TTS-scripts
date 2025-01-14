@@ -1,37 +1,16 @@
 local Array = require("lib-array/Array")
 local Object = require("lib-array/Object")
 local makeHeader = require("mod-music-manager/ui/uiMainHeader")
-local makeFooter = require("mod-music-manager/ui/uiMainFooter")
-local makeResourceRow = require("mod-music-manager/ui/uiMainResourceRow")
 
 local function makeUiMain()
 	local uiVars = State.uiVars
-
-	local resources = Object.entries(State.config.resources)
-	local rows = State.isOpen and resources:map(makeResourceRow) or Array:new()
-
-	local uiHeight = math.max(
-		uiVars.UI_HEIGHT_CLOSED,
-		(
-			(uiVars.ROW_HEIGHT + uiVars.SPACING) * (#resources + 2)
-			+ uiVars.HEADER_PADDING * 2
-			+ uiVars.FOOTER_PADDING * 2
-		)
-	)
-
-	local header = makeHeader()
-	local footer = makeFooter()
-
-	local rows = State.isOpen and resources:map(makeResourceRow) or Array:new()
-
-	rows = header:concat(rows, footer)
 
 	return (
 		{
 			{
 				tag = "VerticalLayout",
 				attributes = {
-					height = State.isOpen and uiHeight or uiVars.UI_HEIGHT_CLOSED,
+					height = uiVars.UI_HEIGHT,
 					width = uiVars.UI_WIDTH,
 					rectAlignment = "UpperCenter",
 					rotation = "0, 0, 0",
@@ -47,10 +26,68 @@ local function makeUiMain()
 					childForceExpandWidth = true,
 					childForceExpandHeight = false,
 					childAlignment = "UpperLeft",
-					spacing = uiVars.SPACING,
-					color = "white",
 				},
-				children = rows
+				children = {
+					makeHeader(),
+					{
+						tag = "HorizontalLayout",
+						attributes = {
+							preferredHeight = 0,
+							flexibleHeight = 1,
+							childForceExpandWidth = false,
+							childForceExpandHeight = true,
+							color = "rgb(0.9, 0.9, 0.4)",
+						},
+						children = {
+							{
+								tag = "VerticalScrollView",
+								attributes = {
+									preferredWidth = 216 * uiVars.QUALITY,
+									scrollbarColors = "yellow | red | green | blue",
+								},
+								children = {
+									{
+										tag = "Panel",
+										attributes = {
+											color = "black",
+											preferredHeight = 100 * uiVars.QUALITY,
+											preferredWidth = 100 * uiVars.QUALITY,
+										},
+										children = {
+											{
+												tag = "Text",
+												attributes = {
+													flexibleWidth = 1,
+													text = "Music Manager",
+													fontSize = 24 * uiVars.QUALITY,
+													fontStyle = "Bold",
+												},
+											}
+										}
+									},
+								}
+							},
+							{
+								tag = "HorizontalLayout", -- padding
+								attributes = {
+									preferredWidth = uiVars.SPACING_S,
+								},
+
+							},
+							{
+								tag = "VerticalScrollView",
+								attributes = {
+									preferredWidth = 0,
+									flexibleWidth = 1,
+									scrollbarColors = "yellow | red | green | blue",
+								},
+								children = {
+									--
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	)

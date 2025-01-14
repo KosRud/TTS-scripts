@@ -79,8 +79,6 @@ local function makeUiFlip()
 									preferredHeight = 0,
 									flexibleHeight = 1,
 									fontSize = uiVars.SPACING,
-									colors =
-									"rgba(0.7,0.7,0.7,1)|rgba(0.8,0.8,0.8,1)|rgba(0.8,0.8,0.8,1)|rgba(0.4,0.4,0.4,1)",
 									lineType = "MultiLineNewLine",
 									characterLimit = 0,
 									onValueChanged = "onJsonInputEdit"
