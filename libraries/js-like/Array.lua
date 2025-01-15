@@ -2,6 +2,16 @@ local Array = {}
 
 function Array:new(tbl) return setmetatable(tbl or {}, {__index = self}) end
 
+function Array:find(predicate)
+    for i, v in ipairs(self) do if predicate(v, i, self) then return v end end
+    return nil
+end
+
+function Array:some(predicate)
+    for i, v in ipairs(self) do if predicate(v, i, self) then return true end end
+    return nil
+end
+
 function Array:map(func)
     local result = self:new()
     for i, value in ipairs(self) do result:push(func(value, i, self)) end
