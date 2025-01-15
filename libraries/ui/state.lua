@@ -1,5 +1,3 @@
-local state = {
-	isFlipped = false
-}
+local state = {isFlipped = false}
 
 return state

@@ -1,6 +1,5 @@
 ---@class TransientState
 ---@field uiVars UiVars
-
 ---@class UiVars
 ---@field BASE_OBJ_SCALE Vector3
 ---@field QUALITY number

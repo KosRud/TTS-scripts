@@ -4,13 +4,13 @@ local state = require("ui/state")
 
 ---@param params UiParams
 local function rebuildUi(params)
-	local xmlTable = Array:new({ params.style }):concat(
-		state.isFlipped
-		and makeUiConfig(params.configUiParams, params.object)
-		or params.makeUi()
-	)
+    local xmlTable = Array:new({params.style}):concat(state.isFlipped and
+                                                          makeUiConfig(
+                                                              params.configUiParams,
+                                                              params.object) or
+                                                          params.makeUi())
 
-	params.object.UI.setXmlTable(xmlTable)
+    params.object.UI.setXmlTable(xmlTable)
 end
 
 return rebuildUi
