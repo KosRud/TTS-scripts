@@ -1,8 +1,8 @@
 local Array = require("js-like/Array")
 local Object = require("js-like/Object")
-local makeHeader = require("ui/uiMainHeader")
+local makeHeader = require("music-manager/ui/header")
 
-local function makeUiMain()
+local function makeUi()
 	local uiVars = TransientState.uiVars
 
 	return (
@@ -111,4 +111,4 @@ local function makeUiMain()
 	)
 end
 
-return makeUiMain
+return makeUi

@@ -7,7 +7,7 @@ local function rebuildUi(params)
 	local xmlTable = Array:new({ params.style }):concat(
 		state.isFlipped
 		and makeUiConfig(params.configUiParams, params.object)
-		or params.makeUiMain()
+		or params.makeUi()
 	)
 
 	params.object.UI.setXmlTable(xmlTable)

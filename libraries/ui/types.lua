@@ -15,7 +15,7 @@
 
 ---@class UiParams
 ---@field configUiParams ConfigUiParams
----@field makeUiMain fun():table
+---@field makeUi fun():table
 ---@field object TargetObject
 ---@field style table The <Default> element in XML ui.
 

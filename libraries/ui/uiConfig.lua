@@ -139,17 +139,18 @@ end
 function onButtonClickJsonLoad()
 	local config = configUiParams.getConfig()
 
+	jsonInput = "\r" .. -- bugs if the first character is "{"
+		JSON.encode_pretty(config)
+
 	object.UI.setAttribute(
 		jsonInputFieldId,
 		"text",
-		"\r" .. -- bugs if the first character is "{"
-		JSON.encode_pretty(config)
+		jsonInput
 	)
 end
 
 function onButtonClickJsonSave()
 	local config = JSON.decode(jsonInput)
-
 	configUiParams.setConfig(config)
 	RebuildUi()
 	onButtonClickJsonLoad()
