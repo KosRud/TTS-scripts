@@ -1,5 +1,5 @@
-local Array = require("lib-array/Array")
-local Object = require("lib-array/Object")
+local Array = require("js-like/Array")
+local Object = require("js-like/Object")
 
 local function makeResourceRow(resource, resourceId)
 	local uiVars = TransientState.uiVars

@@ -1,10 +1,22 @@
-local Array = require("lib-array/Array")
+local Array = require("js-like/Array")
 
+local defaultHeight = 400
+
+---@type string
+local jsonInputFieldId = nil
 local jsonInput = ""
-local configUiParams = {}
+---@type ConfigUiParams
+local configUiParams = nil
+---@type TargetObject
+local object = nil
 
-local function makeUiConfig(params)
+---@param params ConfigUiParams
+---@param obj TargetObject
+---@param jsonFieldId string?
+local function makeUiConfig(params, obj, jsonFieldId)
 	configUiParams = params
+	object = obj
+	jsonInputFieldId = jsonFieldId or "json"
 
 	local spacing = 12 * params.QUALITY
 
@@ -12,7 +24,7 @@ local function makeUiConfig(params)
 		{
 			tag = "VerticalLayout",
 			attributes = {
-				height = params.UI_HEIGHT or (400 * params.QUALITY),
+				height = params.UI_HEIGHT or (defaultHeight * params.QUALITY),
 				width = params.UI_WIDTH,
 				rectAlignment = "UpperCenter",
 				rotation = "180, 180, 0",
@@ -77,7 +89,7 @@ local function makeUiConfig(params)
 							children = {
 								tag = "InputField",
 								attributes = {
-									id = "json",
+									id = jsonInputFieldId,
 									preferredHeight = 0,
 									flexibleHeight = 1,
 									fontSize = 12 * params.QUALITY,
@@ -125,10 +137,10 @@ local function makeUiConfig(params)
 end
 
 function onButtonClickJsonLoad()
-	config = configUiParams.getConfig()
+	local config = configUiParams.getConfig()
 
-	self.UI.setAttribute(
-		TransientState.uiVars.ELEMENT_IDS.json,
+	object.UI.setAttribute(
+		jsonInputFieldId,
 		"text",
 		"\r" .. -- bugs if the first character is "{"
 		JSON.encode_pretty(config)

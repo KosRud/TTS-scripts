@@ -1,6 +1,6 @@
-local Array = require("lib-array/Array")
-local Object = require("lib-array/Object")
-local makeHeader = require("mod-music-manager/ui/uiMainHeader")
+local Array = require("js-like/Array")
+local Object = require("js-like/Object")
+local makeHeader = require("ui/uiMainHeader")
 
 local function makeUiMain()
 	local uiVars = TransientState.uiVars

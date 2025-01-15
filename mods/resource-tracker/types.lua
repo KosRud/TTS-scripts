@@ -1,0 +1,20 @@
+---@class TransientState
+---@field uiVars UiVars
+
+---@class UiVars
+---@field BASE_OBJ_SCALE Vector3
+---@field QUALITY number
+--
+---@field UI_HEIGHT_CLOSED number
+---@field UI_WIDTH number
+--
+---@field SPACING number
+---@field SPACING_S number
+--
+---@field FOOTER_PADDING number
+---@field HEADER_PADDING number
+---@field LINE_WIDTH number
+---@field RESOURCE_COUNT_MIN_WIDTH number
+---@field ROW_HEIGHT number
+--
+---@field CONFIG_UI_PARAMS ConfigUiParams

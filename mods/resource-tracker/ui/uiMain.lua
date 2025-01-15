@@ -1,8 +1,8 @@
-local Array = require("lib-array/Array")
-local Object = require("lib-array/Object")
-local makeHeader = require("mod-resource-tracker/ui/uiMainHeader")
-local makeFooter = require("mod-resource-tracker/ui/uiMainFooter")
-local makeResourceRow = require("mod-resource-tracker/ui/uiMainResourceRow")
+local Array = require("js-like/Array")
+local Object = require("js-like/Object")
+local makeHeader = require("resource-tracker/ui/uiMainHeader")
+local makeFooter = require("resource-tracker/ui/uiMainFooter")
+local makeResourceRow = require("resource-tracker/ui/uiMainResourceRow")
 
 local function makeUiMain()
 	local uiVars = TransientState.uiVars
