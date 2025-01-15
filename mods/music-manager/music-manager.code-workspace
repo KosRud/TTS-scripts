@@ -7,10 +7,6 @@
 		{
 			"name": "libraries",
 			"path": "../../libraries"
-		},
-		{
-			"name": "Tabletop Simulator Lua",
-			"path": "../../../../Users/ADMINI~1/AppData/Local/Temp/TabletopSimulator/Tabletop Simulator Lua"
 		}
 	],
 	"settings": {
