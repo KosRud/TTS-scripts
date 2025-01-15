@@ -15,9 +15,7 @@ local function onObjectPickUp(args)
         return player.color == player_color
     end)
 
-    local dieTag = config.tags.dice:find(function(tag)
-        return object.hasTag(tag)
-    end)
+    local dieTag = util.getDieTag(object)
     if state.activeDieTag ~= dieTag then
         state.activeDieTag = dieTag
         state.hasAttacked = false

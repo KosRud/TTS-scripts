@@ -1,3 +1,4 @@
+local Array = require("js-like/Array")
 local config = require("durobai/config")
 local state = require("durobai/state")
 
@@ -51,6 +52,10 @@ function util.roll(dieObj, isAttack)
                             string.format("+ %d = %d", config.attackBonus,
                                           resultWithMod) or ""))
     return resultWithMod
+end
+
+function util.getDieTag(dieObj)
+    return config.tags.dice:find(function(tag) return dieObj.hasTag(tag) end)
 end
 
 function util.isDie(obj)

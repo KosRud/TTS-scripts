@@ -1,6 +1,7 @@
 local config = require("durobai/config")
 local state = require("durobai/state")
 local util = require("durobai/util")
+local promote = require("durobai/promote")
 
 local function onObjectCollisionEnter(args)
     local attackerDie, collision_info = args[1], args[2]
@@ -21,7 +22,7 @@ local function onObjectCollisionEnter(args)
     state.hasAttacked = true
 
     local success = attackRoll > defenseRoll
-    local winner = success and attackerDie or defenderDie
+    local winnerDie = success and attackerDie or defenderDie
 
     if success then
         defenderDie.destruct()
@@ -32,10 +33,13 @@ local function onObjectCollisionEnter(args)
     local attackerSize = util.getNumSides(attackerDie)
     local defenderSize = util.getNumSides(defenderDie)
 
-    local promotion = config.promotions[defenderSize]
-    if success and defenderSize >= attackerSize and promotion then
-        broadcastToAll(string.format("promoted to: d%d", promotion),
+    local promotionDieSize = config.promotions[defenderSize]
+    if success and defenderSize >= attackerSize and promotionDieSize then
+        broadcastToAll(string.format("promoted to: d%d", promotionDieSize),
                        {r = 0.9, g = 0.9, b = 0.4})
+        promote(winnerDie, promotionDieSize, function(promotedDie)
+            util.snap(promotedDie, state.activePlayer, success)
+        end)
     end
 
     if success then
@@ -43,10 +47,6 @@ local function onObjectCollisionEnter(args)
     else
         broadcastToAll("failure", {r = 1, g = 0.5, b = 0.5})
     end
-
-    util.snap(winner, state.activePlayer, success)
-
-    attackerDie.unregisterCollisions()
 end
 
 return onObjectCollisionEnter
