@@ -1,6 +1,11 @@
 local config = require("durobai/config")
 local state = require("durobai/state")
 
+local function snapCoord(coord, gridOffset, gridSize)
+    local offset = gridOffset - 0.5 * gridSize
+    return math.floor((coord - offset) / gridSize + 0.5) * gridSize + offset
+end
+
 local util = {}
 
 local function snapRotation(rotation) return
@@ -20,6 +25,14 @@ function util.snap(dieObj, activePlayer, toActivePlayer)
             (toActivePlayer and 180 or 0),
         z = 0
     })
+
+    dieObj.setVelocity({x = 0, y = 0, z = 0})
+    dieObj.setAngularVelocity({x = 0, y = 0, z = 0})
+
+    local diePosition = dieObj.getPosition()
+    diePosition.x = snapCoord(diePosition.x, Grid.offsetX, Grid.sizeX)
+    diePosition.z = snapCoord(diePosition.z, Grid.offsetY, Grid.sizeY)
+    dieObj.setPosition(diePosition)
 end
 
 function util.roll(dieObj, isAttack)
