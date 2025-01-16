@@ -2,22 +2,28 @@ local Array = require("js-like/Array")
 local util = require("durobai/util")
 local config = require("durobai/config")
 
-local function getCoordBoardLimit(vectorCoord, dieCoordOnBoard)
-    if vectorCoord > 0 then return 8 - dieCoordOnBoard end
-    if vectorCoord < 0 then return dieCoordOnBoard - 1 end
-    return 7
+local function getCoordBoardLimit(vectorCoord, diePosOnBoard)
+    if vectorCoord > 0 then return 8 - diePosOnBoard end
+    if vectorCoord < 0 then return diePosOnBoard - 1 end
+    return 9999
 end
 
-local function getBoardRangeLimit(dieCoordOnBoard, direction)
+local function getBoardRangeLimit(diePosOnBoard, direction)
 
     local vector = config.rayDirections[direction]
 
-    return math.min(getCoordBoardLimit(vector.x, dieCoordOnBoard.x),
-                    getCoordBoardLimit(vector.z, dieCoordOnBoard.y))
+    return math.min(getCoordBoardLimit(vector.x, diePosOnBoard.x),
+                    getCoordBoardLimit(vector.z, diePosOnBoard.y))
 end
 
-local function guideRay(diePosition, dieOffset, dieCoordOnBoard, range,
-                        direction)
+local function isPositionOnBoard(position)
+    if position.x < 1 or position.x > 8 or position.y < 1 or position.y > 8 then
+        return false
+    end
+    return true
+end
+
+local function guideRay(diePosition, dieOffset, diePosOnBoard, range, direction)
     local diagonalMultiplier = direction % 2 == 0 and math.sqrt(2) or 1
 
     local hit = util.castRay(self, diePosition, direction)
@@ -25,7 +31,8 @@ local function guideRay(diePosition, dieOffset, dieCoordOnBoard, range,
         range = math.min(range, hit.distance / diagonalMultiplier / Grid.sizeX)
     end
 
-    range = math.min(range, getBoardRangeLimit(dieCoordOnBoard, direction))
+    range = math.min(range, getBoardRangeLimit(diePosOnBoard, direction))
+    log(getBoardRangeLimit(diePosOnBoard, direction))
 
     range = range * config.boardSize / 8 * diagonalMultiplier
 
@@ -59,15 +66,17 @@ local function rebuildUi(dieObj)
         y = dieOffset.y * myScale.y,
         z = dieOffset.z * myScale.z
     }
-    local dieCoordOnBoard = {
+    local diePosOnBoard = {
         x = math.floor(dieOffsetUnscaled.x / Grid.sizeX + 5),
         y = math.floor(dieOffsetUnscaled.z / Grid.sizeY + 5)
     }
     local range = util.getMoveRange(dieObj)
 
     local rays = Array:new({})
-    for i = 1, 8 do
-        rays:push(guideRay(diePosition, dieOffset, dieCoordOnBoard, range, i))
+    if isPositionOnBoard(diePosOnBoard) then
+        for i = 1, 8 do
+            rays:push(guideRay(diePosition, dieOffset, diePosOnBoard, range, i))
+        end
     end
 
     self.UI.setXmlTable({
