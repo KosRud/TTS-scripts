@@ -61,7 +61,8 @@ Example config:
 }
 ```
 
-Extensions:
+### Extensions
+
 * [Lua]([Lua](https://marketplace.visualstudio.com/items?itemName=sumneko.lua))
 * [Tabletop Simulator Lua](https://marketplace.visualstudio.com/items?itemName=rolandostar.tabletopsimulator-lua)
 	* see [Not working for VS Code 1.94](https://github.com/rolandostar/tabletopsimulator-lua-vscode/issues/48#issuecomment-2405736522) issue
