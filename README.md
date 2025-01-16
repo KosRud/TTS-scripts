@@ -10,7 +10,7 @@ A dice game on a chessboard. See [rules](mods/durobai/README.md).
 
 ## Resource Tracker
 
-Track resources, like hit points or spell slots in D&D. Flip over to configure by writing JSON.
+Track resources like hit points or spell slots in D&D. Flip over to configure by writing JSON.
 
 |||
 |----|-----|
