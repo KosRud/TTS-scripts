@@ -8,7 +8,7 @@ When you attack, roll the attacking die. Your opponent will roll the defending d
 
 You have a +3 bonus on the first attack roll of your turn.
 
-If the first attack on your turn succeeds, you can immediately take another turn. You must use the same die for this turn.
+If the first attack on your turn succeeds, you can immediately move the attacking die once again.
 
 If a die successfully attacks another die of the same size or larger, is it promoted to one size larger than the die it attacked. A d12 is promoted to a d20. A d20 can't be promoted any further.
 
