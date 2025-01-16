@@ -1,20 +1,45 @@
+local Array = require("js-like/Array")
 local util = require("durobai/util")
+local config = require("durobai/config")
 
-local dieOffsetMult = 100
-local boardSize = 1360
-local rayColor = "rgba(0.5, 0.1, 0.1, 0.2)"
+local function getCoordBoardLimit(vectorCoord, dieCoordOnBoard)
+    if vectorCoord > 0 then return 8 - dieCoordOnBoard end
+    if vectorCoord < 0 then return dieCoordOnBoard - 1 end
+    return 7
+end
 
-local function guideRay(dieOffset, range, direction)
+local function getBoardRangeLimit(dieCoordOnBoard, direction)
+
+    local vector = config.rayDirections[direction]
+
+    return math.min(getCoordBoardLimit(vector.x, dieCoordOnBoard.x),
+                    getCoordBoardLimit(vector.z, dieCoordOnBoard.y))
+end
+
+local function guideRay(diePosition, dieOffset, dieCoordOnBoard, range,
+                        direction)
+    local diagonalMultiplier = direction % 2 == 0 and math.sqrt(2) or 1
+
+    local hit = util.castRay(self, diePosition, direction)
+    if hit then
+        range = math.min(range, hit.distance / diagonalMultiplier / Grid.sizeX)
+    end
+
+    range = math.min(range, getBoardRangeLimit(dieCoordOnBoard, direction))
+
+    range = range * config.boardSize / 8 * diagonalMultiplier
+
     return {
         tag = "Panel",
         attributes = {
             height = 12,
-            width = range * (direction % 2 == 0 and 1 or math.sqrt(2)),
-            color = rayColor,
-            position = string.format("%f %f %f", dieOffset.x * dieOffsetMult,
-                                     dieOffset.z * dieOffsetMult, 0),
+            width = range,
+            color = config.rayColor,
+            position = string.format("%f %f %f",
+                                     dieOffset.x * config.dieOffsetMult,
+                                     dieOffset.z * config.dieOffsetMult, 0),
             pivot = "0 0.5 0.5",
-            rotation = string.format("%s %s %s", 0, 0, direction * 45)
+            rotation = string.format("%s %s %s", 0, 0, (direction - 1) * 45)
         }
     }
 
@@ -28,19 +53,28 @@ local function rebuildUi(dieObj)
 
     local diePosition = util.getSnappedPosition(dieObj)
     local dieOffset = self.positionToLocal(diePosition)
-    local range = boardSize / 8 * util.getMoveRange(dieObj)
+    local myScale = self.getScale()
+    local dieOffsetUnscaled = {
+        x = dieOffset.x * myScale.x,
+        y = dieOffset.y * myScale.y,
+        z = dieOffset.z * myScale.z
+    }
+    local dieCoordOnBoard = {
+        x = math.floor(dieOffsetUnscaled.x / Grid.sizeX + 5),
+        y = math.floor(dieOffsetUnscaled.z / Grid.sizeY + 5)
+    }
+    local range = util.getMoveRange(dieObj)
+
+    local rays = Array:new({})
+    for i = 1, 8 do
+        rays:push(guideRay(diePosition, dieOffset, dieCoordOnBoard, range, i))
+    end
 
     self.UI.setXmlTable({
         {
             tag = "Panel",
-            attributes = {height = boardSize, width = boardSize},
-            children = {
-                guideRay(dieOffset, range, 0), guideRay(dieOffset, range, 1),
-                guideRay(dieOffset, range, 2), guideRay(dieOffset, range, 3),
-                guideRay(dieOffset, range, 4), guideRay(dieOffset, range, 5),
-                guideRay(dieOffset, range, 6), guideRay(dieOffset, range, 7),
-                guideRay(dieOffset, range, 8)
-            }
+            attributes = {height = config.boardSize, width = config.boardSize},
+            children = rays
         }
     })
 
