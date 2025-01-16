@@ -1,9 +1,51 @@
-# Gotchas
+# Games
+
+## DuRoBaI
+
+A dice game on a chessboard. See [rules](mods/durobai/README.md).
+
+<img src="images/DuRoBaI-icon.png" height="200">
+
+# Tools
+
+## Resource Tracker
+
+Track resources, like hit points or spell slots in D&D. Flip over to configure by writing JSON.
+
+|||
+|----|-----|
+|<img src="images/resource-manager.png" height="200">|<img src="images/resource-manager-config.png" height="200">|
+
+Example config:
+
+```json
+
+{
+  "resources": {
+    "spell slot (level 1)": {
+      "current": 4,
+      "max": 4
+    },
+    "spell slot (level 2)": {
+      "current": 3,
+      "max": 3
+    },
+    "spell slot (level 3)": {
+      "current": 2,
+      "max": 2
+    }
+  },
+  "uiQuality": 3
+}
+```
+
+# Development
+
+## Gotchas
 
 * By default the UI orientation looks upside-down in alt-zoom, but turning UI breaks ScrollView, see [custom UI ScrollViews don't render properly when rotated](https://tabletopsimulator.nolt.io/429)
 
-
-# VSCode config
+## VSCode config
 
 ```json
 {
