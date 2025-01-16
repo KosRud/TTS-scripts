@@ -14,6 +14,8 @@ local function snapRotation(rotation) return
 
 function util.getBoards(tags) return getObjectsWithTag(tags.board) end
 
+util.castRay = require("durobai/castRay")
+
 function util.getMoveRange(dieObj)
     local size = util.getNumSides(dieObj)
     return config.moveRangeOverride[size] or size / 2
@@ -21,14 +23,14 @@ end
 
 function util.getNumSides(dieObj) return #dieObj.getRotationValues() end
 
----@param toActivePlayer boolean
-function util.snap(dieObj, activePlayer, toActivePlayer)
+---@param faceActivePlayer boolean
+function util.snapDieToGrid(dieObj, activePlayer, faceActivePlayer)
     dieObj.setRotation(dieObj.getRotationValues()[util.getNumSides(dieObj)]
                            .rotation)
     dieObj.rotate({
         x = 0,
         y = snapRotation(activePlayer.getPointerRotation()) +
-            (toActivePlayer and 180 or 0),
+            (faceActivePlayer and 180 or 0),
         z = 0
     })
 

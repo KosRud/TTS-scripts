@@ -14,7 +14,10 @@ local function onObjectCollisionEnter(args)
         board.call("HideLines")
     end
 
-    if not util.isDie(defenderDie) then return end
+    if not util.isDie(defenderDie) then
+        util.snapDieToGrid(attackerDie, state.activePlayer, true)
+        return
+    end
 
     local attackRoll = util.roll(attackerDie, true)
     local defenseRoll = util.roll(defenderDie, false)
@@ -37,7 +40,7 @@ local function onObjectCollisionEnter(args)
         broadcastToAll(string.format("promoted to: d%d", promotionDieSize),
                        {r = 0.9, g = 0.9, b = 0.4})
         promote(winnerDie, promotionDieSize, function(promotedDie)
-            util.snap(promotedDie, state.activePlayer, success)
+            util.snapDieToGrid(promotedDie, state.activePlayer, success)
         end)
     end
 
