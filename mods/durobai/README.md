@@ -8,3 +8,11 @@
 6. If the first attack on your turn succeeds, you can move the attacking die again.
 7. If a die successfully attacks another die of the same size or larger, is it promoted to one size larger than the die it attacked. A d12 is promoted to a d20. A d20 can't be promoted any further.
 8. The game ends when one of the players has no dice left. The player with at least one die remaining wins.
+
+## Experimental variant
+
+Each player has 30 hit points.
+
+If your die is already standing in an empty square on the opponent's edge of the board, or you end its move in such a square, you can roll that die to reduce opponent's hit points. This ends your turn.
+
+A player who's hit points reach 0 is defeated.
