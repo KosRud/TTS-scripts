@@ -12,7 +12,12 @@ local config = {
     attackBonus = 3,
     dieOffsetMult = 100,
     boardSize = 1360,
-    rayColor = "rgba(0.5, 0.1, 0.1, 0.2)"
+    rayColor = "rgba(0.4,1,0.4,0.2)",
+    rayDirections = {
+        {x = 1, y = 0, z = 0}, {x = 1, y = 0, z = 1}, {x = 0, y = 0, z = 1},
+        {x = -1, y = 0, z = 1}, {x = -1, y = 0, z = 0}, {x = -1, y = 0, z = -1},
+        {x = 0, y = 0, z = -1}, {x = 1, y = 0, z = -1}
+    }
 }
 
 return config

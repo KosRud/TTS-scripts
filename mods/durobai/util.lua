@@ -52,7 +52,8 @@ end
 
 function util.roll(dieObj, isAttack)
     local numSidesOrig = util.getNumSides(dieObj)
-    local defenseOverride = config.defenseOverride[numSidesOrig]
+    local defenseOverride = not isAttack and
+                                config.defenseOverride[numSidesOrig] or nil
     local numSides = not isAttack and defenseOverride or numSidesOrig
 
     local result = math.floor(math.random() * numSides) + 1

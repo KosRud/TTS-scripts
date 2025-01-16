@@ -10,8 +10,6 @@ You have a +3 bonus on the first attack roll of your turn.
 
 If the first attack on your turn succeeds, you can immediately take another turn. You must use the same die for this turn.
 
-If the first attack on your turn fails, you can immediately take another turn. You must use a different die for this turn, and you must make an attack.
-
 If a die successfully attacks another die of the same size or larger, is it promoted to one size larger than the die it attacked. A d12 is promoted to a d20. A d20 can't be promoted any further.
 
 The game ends when one of the players has no dice left. The player with at least one die remaining wins.
