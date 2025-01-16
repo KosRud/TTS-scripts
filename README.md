@@ -11,7 +11,7 @@ Fully scripted with automated rolls and promotions.
 
 ## Resource Tracker
 
-Track resources like hit points or spell slots in D&D. Flip over to configure by writing JSON.
+Track resources like hit points or spell slots in D&D. Flip over to configure by editing JSON.
 
 |||
 |----|-----|
