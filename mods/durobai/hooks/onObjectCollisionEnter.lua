@@ -37,8 +37,8 @@ local function onObjectCollisionEnter(args)
 
     local promotionDieSize = config.promotions[defenderSize]
     if success and defenderSize >= attackerSize and promotionDieSize then
-        broadcastToAll(string.format("promoted to: d%d", promotionDieSize),
-                       {r = 0.9, g = 0.9, b = 0.4})
+        broadcastToAll(string.format("promoted to d%d", promotionDieSize),
+                       {r = 0.8, g = 0.8, b = 0.3})
         promote(winnerDie, promotionDieSize, function(promotedDie)
             util.snapDieToGrid(promotedDie, state.activePlayer, success)
         end)
