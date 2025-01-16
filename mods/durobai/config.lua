@@ -9,7 +9,10 @@ local config = {
     promotions = {[6] = 8, [8] = 10, [10] = 12, [12] = 20, [20] = 20},
     defenseOverride = {[20] = 6},
     moveRangeOverride = {[6] = 2},
-    attackBonus = 3
+    attackBonus = 3,
+    dieOffsetMult = 100,
+    boardSize = 1360,
+    rayColor = "rgba(0.5, 0.1, 0.1, 0.2)"
 }
 
 return config
