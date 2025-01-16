@@ -41,6 +41,13 @@ function util.snap(dieObj, activePlayer, toActivePlayer)
     dieObj.setPosition(diePosition)
 end
 
+function util.getSnappedPosition(obj)
+    local position = obj.getPosition()
+    position.x = snapCoord(position.x, Grid.offsetX, Grid.sizeX)
+    position.z = snapCoord(position.z, Grid.offsetY, Grid.sizeY)
+    return position
+end
+
 function util.roll(dieObj, isAttack)
     local numSidesOrig = util.getNumSides(dieObj)
     local defenseOverride = config.defenseOverride[numSidesOrig]
