@@ -5,7 +5,6 @@ local promote = require("durobai/promote")
 
 local function onObjectCollisionEnter(args)
     local attackerDie, collision_info = args[1], args[2]
-
     local defenderDie = collision_info.collision_object
 
     if not util.isDie(attackerDie) then return end

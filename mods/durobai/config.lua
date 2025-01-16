@@ -8,6 +8,7 @@ local config = {
     },
     promotions = {[6] = 8, [8] = 10, [10] = 12, [12] = 20, [20] = 20},
     defenseOverride = {[20] = 6},
+    moveRangeOverride = {[6] = 2},
     attackBonus = 3
 }
 

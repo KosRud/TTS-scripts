@@ -22,7 +22,7 @@ local function onObjectPickUp(args)
     end
 
     for _, board in ipairs(util.getBoards(config.tags)) do
-        board.call("ShowLines")
+        board.call("ShowLines", object)
     end
 
 end

@@ -14,6 +14,11 @@ local function snapRotation(rotation) return
 
 function util.getBoards(tags) return getObjectsWithTag(tags.board) end
 
+function util.getMoveRange(dieObj)
+    local size = util.getNumSides(dieObj)
+    return config.moveRangeOverride[size] or size / 2
+end
+
 function util.getNumSides(dieObj) return #dieObj.getRotationValues() end
 
 ---@param toActivePlayer boolean
