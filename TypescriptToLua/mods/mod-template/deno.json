@@ -5,7 +5,7 @@
 		"listen": "deno run -A ./util/listen.ts"
 	},
 	"compilerOptions": {
-		"types": ["../libraries/tts-types-bundle/index.d.ts"]
+		"types": ["../../libraries/tts-types-bundle/index.d.ts"]
 	},
 	"imports": {
 		"path": "jsr:@std/path"

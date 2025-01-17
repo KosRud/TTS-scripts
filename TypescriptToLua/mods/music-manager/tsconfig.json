@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"rootDir": ".",
+		"outDir": "build",
+
+		"target": "ESNext",
+		"lib": ["ESNext"],
+
+		"moduleResolution": "nodenext",
+		"module": "NodeNext",
+
+		"declaration": false,
+		"declarationMap": false,
+
+		"strict": true,
+		"types": ["../../libraries/tts-types-bundle/index.d.ts"]
+	},
+	"include": ["./src"],
+	"tstl": {
+		"luaTarget": "5.2",
+		"noImplicitSelf": true,
+		"tstlVerbose": true,
+		"luaBundle": "bundle.lua",
+		"luaBundleEntry": "src/mod.ts"
+	}
+}

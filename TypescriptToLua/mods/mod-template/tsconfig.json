@@ -13,7 +13,7 @@
 		"declarationMap": false,
 
 		"strict": true,
-		"types": ["../libraries/tts-types-bundle/index.d.ts"]
+		"types": ["../../libraries/tts-types-bundle/index.d.ts"]
 	},
 	"include": ["./src"],
 	"tstl": {
