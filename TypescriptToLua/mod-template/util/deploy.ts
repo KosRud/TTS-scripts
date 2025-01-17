@@ -14,7 +14,7 @@ Deno.copyFileSync(
 	)
 );
 
-// const conn = await Deno.connect({ hostname: 'localhost', port: 39999 });
+// const conn = await Deno.connect({ hostname: '127.0.0.1', port: 39999 });
 // const message = JSON.stringify({
 // 	messageID: 1,
 // 	scriptStates: [
@@ -33,28 +33,3 @@ Deno.copyFileSync(
 // });
 // await conn.write(new TextEncoder().encode(message));
 // conn.close();
-
-// Deno.serve()
-
-// const client = net.connect(39999, 'localhost', () => {
-// 	console.log('a');
-// 	client.write(
-// 		JSON.stringify({
-// 			messageID: 1,
-// 			scriptStates: [
-// 				{
-// 					name: 'Global',
-// 					guid: '-1',
-// 					script: '',
-// 					ui: '',
-// 				},
-// 				{
-// 					name: 'Block Rectangle',
-// 					guid: 'a0b2d5',
-// 					script: '',
-// 				},
-// 			],
-// 		})
-// 	);
-// 	client.destroy();
-// });
