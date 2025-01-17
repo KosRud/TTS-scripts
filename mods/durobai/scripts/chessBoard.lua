@@ -9,7 +9,6 @@ local function getCoordBoardLimit(vectorCoord, diePosOnBoard)
 end
 
 local function getBoardRangeLimit(diePosOnBoard, direction)
-
     local vector = config.ui.rayDirections[direction]
 
     return math.min(getCoordBoardLimit(vector.x, diePosOnBoard.x),
