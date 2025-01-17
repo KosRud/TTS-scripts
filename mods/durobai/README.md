@@ -7,7 +7,10 @@
 5. You have a +3 bonus on the first attack roll of your turn.
 6. If the first attack on your turn succeeds, you can move the attacking die again.
 7. If a die successfully attacks another die of the same size or larger, is it promoted to one size larger than the die it attacked. A d12 is promoted to a d20. A d20 can't be promoted any further.
-8. The game ends when one of the players has no dice left. The player with at least one die remaining wins.
+8. Both players start with 30 hit points. Victory is achieved by reducing your opponent to 0 hit points.
+9. As a first attack on your turn, you can damage the opponent's hit points directly instead of attacking a die. To do this, your die must end its move in the row of squares nearest to your opponent or already be there at the start of your turn. Roll the attacking die, the number rolled is subtracted for the opponent's hit points. Then your turn ends.
+
+
 
 ## Experimental variant
 

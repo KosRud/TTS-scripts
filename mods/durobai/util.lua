@@ -9,6 +9,7 @@ local util = {}
 
 util.clampDieToBoard = utilBoard.clampDieToBoard
 util.getBoard = utilBoard.getBoard
+util.isPositionOutsideBoard = utilBoard.isPositionOutsideBoard
 util.getPositionOnBoard = utilBoard.getPositionOnBoard
 util.castRay = require("durobai/castRay")
 util.getSnappedPosition = utilSnap.getSnappedPosition
@@ -18,7 +19,7 @@ util.getMoveRange = utilDie.getMoveRange
 
 local function damageOpponent(dieObj, damage)
     local hpTag = config.tags.hp:find(function(_, id)
-        return dieObj.hasTag(config.tags.dice[id])
+        return not dieObj.hasTag(config.tags.dice[id])
     end)
     local hpCounter = getObjectsWithTag(hpTag)[1]
     local curHp = hpCounter.getValue()
@@ -29,7 +30,7 @@ end
 
 local function announceVictory(attackerDie)
     local player = config.players:find(function(_, id)
-        return not attackerDie.hasTag(config.tags.dice[id])
+        return attackerDie.hasTag(config.tags.dice[id])
     end)
     broadcastToAll(string.format("%s wins!", player.name), player.color)
 end

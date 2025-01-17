@@ -8,6 +8,7 @@ local function onObjectPickUp(args)
 
     if not util.isDie(object) then return end
     object.registerCollisions()
+    state.pickPositions[object] = object.getPosition()
     state.dieThatMadeHpAttack = nil
 
     local players = Array:new(Player.getPlayers())

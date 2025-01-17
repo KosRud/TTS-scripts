@@ -32,7 +32,6 @@ local function guideRay(diePosition, dieOffset, diePosOnBoard, range, direction)
     end
 
     range = math.min(range, getBoardRangeLimit(diePosOnBoard, direction))
-    log(getBoardRangeLimit(diePosOnBoard, direction))
 
     range = range * config.boardSize / 8 * diagonalMultiplier
 
@@ -60,16 +59,7 @@ local function rebuildUi(dieObj)
 
     local diePosition = util.getSnappedPosition(dieObj)
     local dieOffset = self.positionToLocal(diePosition)
-    local myScale = self.getScale()
-    local dieOffsetUnscaled = {
-        x = dieOffset.x * myScale.x,
-        y = dieOffset.y * myScale.y,
-        z = dieOffset.z * myScale.z
-    }
-    local diePosOnBoard = {
-        x = math.floor(dieOffsetUnscaled.x / Grid.sizeX + 5),
-        y = math.floor(dieOffsetUnscaled.z / Grid.sizeY + 5)
-    }
+    local diePosOnBoard = util.getPositionOnBoard(dieObj, self)
     local range = util.getMoveRange(dieObj)
 
     local rays = Array:new({})

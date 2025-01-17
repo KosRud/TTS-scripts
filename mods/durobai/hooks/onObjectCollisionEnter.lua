@@ -21,11 +21,11 @@ local function onObjectCollisionEnter(args)
 
         local positionOnBoard = util.getPositionOnBoard(attackerDie, board)
 
-        if positionOnBoard.y > 8 or positionOnBoard.y < 1 then
-            local damage = util.rollAttackHp(attackerDie)
+        if util.isPositionOutsideBoard(positionOnBoard) then
+            util.rollAttackHp(attackerDie)
+            attackerDie.setPosition(state.pickPositions[attackerDie])
+            state.pickPositions[attackerDie] = nil
         end
-
-        util.clampDieToBoard(attackerDie, board)
 
         util.snapDieToGrid(attackerDie, state.activePlayer, true)
         return
