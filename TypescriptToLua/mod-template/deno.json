@@ -1,0 +1,12 @@
+{
+	"tasks": {
+		"build": "deno run -A  ./node_modules/typescript-to-lua/dist/tstl.js",
+		"deploy": "deno task build; deno run -A ./util/deploy.ts"
+	},
+	"compilerOptions": {
+		"types": ["../libraries/tts-types-bundle/index.d.ts"]
+	},
+	"imports": {
+		"path": "jsr:@std/path"
+	}
+}

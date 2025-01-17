@@ -13,13 +13,14 @@
 		"declarationMap": false,
 
 		"strict": true,
-		"types": ["tts-types"]
+		"types": ["../libraries/tts-types-bundle/index.d.ts"]
 	},
+	"include": ["./src"],
 	"tstl": {
 		"luaTarget": "5.2",
 		"noImplicitSelf": true,
 		"tstlVerbose": true,
 		"luaBundle": "bundle.lua",
-		"luaBundleEntry": "src/index.ts"
+		"luaBundleEntry": "src/mod.ts"
 	}
 }
