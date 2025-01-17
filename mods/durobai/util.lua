@@ -39,11 +39,11 @@ function util.rollAttack(attackerDie)
     local numSides = util.getNumSides(attackerDie)
 
     local result = math.floor(math.random() * numSides) + 1
-    local mod = not state.hasAttacked and config.attackBonus or 0
+    local mod = not state.hasAttacked and config.rules.attackBonus or 0
     local resultWithMod = result + mod
     printToAll(string.format("attack: (d%d) %d%s", numSides, result,
                              mod ~= 0 and
-                                 string.format("+ %d = %d", config.attackBonus,
+                                 string.format("+ %d = %d", config.rules.attackBonus,
                                                resultWithMod) or ""))
     return resultWithMod
 end
@@ -55,7 +55,7 @@ function util.rollAttackHp(attackerDie)
 
     local hpValues = damageOpponent(attackerDie, result)
     printToAll(string.format("hp reduction: %d => %d", hpValues.oldHp,
-                             hpValues.newHp), config.color.red)
+                             hpValues.newHp), config.ui.color.red)
 
     if hpValues.newHp <= 0 then announceVictory(attackerDie) end
 
@@ -68,7 +68,7 @@ end
 
 function util.rollDefense(defenderDie)
     local numSidesOrig = util.getNumSides(defenderDie)
-    local defenseOverride = config.defenseOverride[numSidesOrig] or nil
+    local defenseOverride = config.rules.defenseOverride[numSidesOrig] or nil
     local numSides = defenseOverride or numSidesOrig
 
     local result = math.floor(math.random() * numSides) + 1

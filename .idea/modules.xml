@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/mods/durobai/durobai.iml" filepath="$PROJECT_DIR$/mods/durobai/durobai.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/js-like/js-like.iml" filepath="$PROJECT_DIR$/libraries/js-like/js-like.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mods/music-manager/music-manager.iml" filepath="$PROJECT_DIR$/mods/music-manager/music-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mods/resource-tracker/resource-tracker.iml" filepath="$PROJECT_DIR$/mods/resource-tracker/resource-tracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tts-types/tts-types.iml" filepath="$PROJECT_DIR$/tts-types/tts-types.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/ui/ui.iml" filepath="$PROJECT_DIR$/libraries/ui/ui.iml" />
+    </modules>
+  </component>
+</project>

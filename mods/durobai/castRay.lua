@@ -18,7 +18,7 @@ local function castRay(board, diePosition, direction)
 
     return Physics.cast({
         origin = diePosition,
-        direction = vectorToWorld(board, config.rayDirections[direction]),
+        direction = vectorToWorld(board, config.ui.rayDirections[direction]),
         type = 1
     })[1]
 end

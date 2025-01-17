@@ -10,7 +10,7 @@ end
 
 local function getBoardRangeLimit(diePosOnBoard, direction)
 
-    local vector = config.rayDirections[direction]
+    local vector = config.ui.rayDirections[direction]
 
     return math.min(getCoordBoardLimit(vector.x, diePosOnBoard.x),
                     getCoordBoardLimit(vector.z, diePosOnBoard.y))
@@ -33,17 +33,18 @@ local function guideRay(diePosition, dieOffset, diePosOnBoard, range, direction)
 
     range = math.min(range, getBoardRangeLimit(diePosOnBoard, direction))
 
-    range = range * config.boardSize / 8 * diagonalMultiplier
+    range = range * config.objects.boardSize / 8 * diagonalMultiplier
 
     return {
         tag = "Panel",
         attributes = {
             height = 12,
             width = range,
-            color = config.rayColor,
-            position = string.format("%f %f %f",
-                                     dieOffset.x * config.dieOffsetMult,
-                                     dieOffset.z * config.dieOffsetMult, 0),
+            color = config.ui.rayColor,
+            position = string.format("%f %f %f", dieOffset.x *
+                                         config.objects.dieOffsetMult,
+                                     dieOffset.z * config.objects.dieOffsetMult,
+                                     0),
             pivot = "0 0.5 0.5",
             rotation = string.format("%s %s %s", 0, 0, (direction - 1) * 45)
         }
@@ -72,7 +73,10 @@ local function rebuildUi(dieObj)
     self.UI.setXmlTable({
         {
             tag = "Panel",
-            attributes = {height = config.boardSize, width = config.boardSize},
+            attributes = {
+                height = config.objects.boardSize,
+                width = config.objects.boardSize
+            },
             children = rays
         }
     })
