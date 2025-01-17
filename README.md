@@ -43,6 +43,8 @@ Example config:
 
 # Development
 
+VSCode has an extension to integrate with TTS, but IntelliJ IDEA is a better IDE. I write code in IntelliJ IDEA, then run it through TTS using VSCode.
+
 ## Gotchas
 
 * By default the UI orientation looks upside-down in alt-zoom but turning UI breaks ScrollView, see [custom UI ScrollViews don't render properly when rotated](https://tabletopsimulator.nolt.io/429).
@@ -69,3 +71,9 @@ Example config:
 * [Tabletop Simulator Lua](https://marketplace.visualstudio.com/items?itemName=rolandostar.tabletopsimulator-lua)
 	* see [Not working for VS Code 1.94](https://github.com/rolandostar/tabletopsimulator-lua-vscode/issues/48#issuecomment-2405736522) issue
 * [vscode-lua-format](https://marketplace.visualstudio.com/items?itemName=Koihik.vscode-lua-format)
+
+## IntelliJ IDEA
+
+* IntelliJ IDEA Community Edition (get from [JetBrains Toolbox App](https://www.jetbrains.com/toolbox-app/))
+* [EmmyLua](https://plugins.jetbrains.com/plugin/9768-emmylua)
+* [Tabletop Simulator Luanalysis Types](https://github.com/Benjamin-Dobell/tts-types/tree/master)
