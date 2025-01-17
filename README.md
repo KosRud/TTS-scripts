@@ -2,7 +2,7 @@
 
 ## DuRoBaI
 
-A dice game on a chessboard. See [rules](mods/durobai/README.md).  
+A dice game on a chessboard. See [rules](mods/durobai/rules/DuRoBaI.pdf).  
 Fully scripted with automated rolls and promotions.
 
 <img src="images/DuRoBaI-icon.png" height="200">
