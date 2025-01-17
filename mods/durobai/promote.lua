@@ -12,7 +12,8 @@ local function getPromotion(dieTag, dieSize)
     local isPlayerOne = dieTag == config.tags.dice[1]
     local promotionDie = dice:find(function(die)
         return die.name ==
-                   string.format("D%d_%s", dieSize, isPlayerOne and "A" or "B")
+                   string.format("D%d_%s", dieSize,
+                                 isPlayerOne and "Blue" or "Yellow")
     end)
     return promotionDie
 end

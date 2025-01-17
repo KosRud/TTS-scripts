@@ -6,21 +6,33 @@ local promote = require("durobai/promote")
 local function onObjectCollisionEnter(args)
     local attackerDie, collision_info = args[1], args[2]
     local defenderDie = collision_info.collision_object
+    local board = util.getBoard()
 
     if not util.isDie(attackerDie) then return end
 
     attackerDie.unregisterCollisions()
-    for _, board in ipairs(util.getBoards(config.tags)) do
-        board.call("HideLines")
-    end
+    board.call("HideLines")
 
     if not util.isDie(defenderDie) then
+
+        -- workaround for getting several collision instances in rapid succession instead of one when the die falls
+        if state.dieThatMadeHpAttack == attackerDie then return end
+        state.dieThatMadeHpAttack = attackerDie
+
+        local positionOnBoard = util.getPositionOnBoard(attackerDie, board)
+
+        if positionOnBoard.y > 8 or positionOnBoard.y < 1 then
+            local damage = util.rollAttackHp(attackerDie)
+        end
+
+        util.clampDieToBoard(attackerDie, board)
+
         util.snapDieToGrid(attackerDie, state.activePlayer, true)
         return
     end
 
-    local attackRoll = util.roll(attackerDie, true)
-    local defenseRoll = util.roll(defenderDie, false)
+    local attackRoll = util.rollAttack(attackerDie)
+    local defenseRoll = util.rollDefense(defenderDie)
     state.hasAttacked = true
 
     local success = attackRoll > defenseRoll
@@ -39,16 +51,16 @@ local function onObjectCollisionEnter(args)
     if success and defenderSize >= attackerSize and promotionSize and
         promotionSize > attackerSize then
         broadcastToAll(string.format("promoted to d%d", promotionSize),
-                       {r = 0.8, g = 0.8, b = 0.3})
+                       config.color.yellow)
         promote(winnerDie, promotionSize, function(promotedDie)
             util.snapDieToGrid(promotedDie, state.activePlayer, success)
         end)
     end
 
     if success then
-        broadcastToAll("success", {r = 0.4, g = 0.7, b = 0.4})
+        broadcastToAll("success", config.color.green)
     else
-        broadcastToAll("failure", {r = 1, g = 0.5, b = 0.5})
+        broadcastToAll("failure", config.color.red)
     end
 end
 

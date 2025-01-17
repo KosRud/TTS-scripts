@@ -8,6 +8,7 @@ local function onObjectPickUp(args)
 
     if not util.isDie(object) then return end
     object.registerCollisions()
+    state.dieThatMadeHpAttack = nil
 
     local players = Array:new(Player.getPlayers())
 
@@ -21,9 +22,7 @@ local function onObjectPickUp(args)
         state.hasAttacked = false
     end
 
-    for _, board in ipairs(util.getBoards(config.tags)) do
-        board.call("ShowLines", object)
-    end
+    util.getBoard().call("ShowLines", object)
 
 end
 

@@ -7,6 +7,11 @@ function Array:find(predicate)
     return nil
 end
 
+function Array:findIndex(predicate)
+    for i, v in ipairs(self) do if predicate(v, i, self) then return i end end
+    return nil
+end
+
 function Array:some(predicate)
     for i, v in ipairs(self) do if predicate(v, i, self) then return true end end
     return nil

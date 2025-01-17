@@ -1,72 +1,81 @@
 local Array = require("js-like/Array")
 local config = require("durobai/config")
 local state = require("durobai/state")
-
-local function snapCoord(coord, gridOffset, gridSize)
-    local offset = gridOffset - 0.5 * gridSize
-    return math.floor((coord - offset) / gridSize + 0.5) * gridSize + offset
-end
+local utilBoard = require("durobai/utilBoard")
+local utilSnap = require("durobai/utilSnap")
+local utilDie = require("durobai/utilDie")
 
 local util = {}
 
-local function snapRotation(rotation) return
-    math.floor(rotation / 90 + 0.5) * 90 end
-
-function util.getBoards(tags) return getObjectsWithTag(tags.board) end
-
+util.clampDieToBoard = utilBoard.clampDieToBoard
+util.getBoard = utilBoard.getBoard
+util.getPositionOnBoard = utilBoard.getPositionOnBoard
 util.castRay = require("durobai/castRay")
+util.getSnappedPosition = utilSnap.getSnappedPosition
+util.snapDieToGrid = utilSnap.snapDieToGrid
+util.getNumSides = utilDie.getNumSides
+util.getMoveRange = utilDie.getMoveRange
 
-function util.getMoveRange(dieObj)
-    local size = util.getNumSides(dieObj)
-    return config.moveRangeOverride[size] or size / 2
+local function damageOpponent(dieObj, damage)
+    local hpTag = config.tags.hp:find(function(_, id)
+        return dieObj.hasTag(config.tags.dice[id])
+    end)
+    local hpCounter = getObjectsWithTag(hpTag)[1]
+    local curHp = hpCounter.getValue()
+    local newHp = math.max(0, curHp - damage)
+    hpCounter.setValue(newHp)
+    return {oldHp = curHp, newHp = newHp}
 end
 
-function util.getNumSides(dieObj) return #dieObj.getRotationValues() end
-
----@param faceActivePlayer boolean
-function util.snapDieToGrid(dieObj, activePlayer, faceActivePlayer)
-    dieObj.setRotation(dieObj.getRotationValues()[util.getNumSides(dieObj)]
-                           .rotation)
-    dieObj.rotate({
-        x = 0,
-        y = snapRotation(activePlayer.getPointerRotation()) +
-            (faceActivePlayer and 180 or 0),
-        z = 0
-    })
-
-    dieObj.setVelocity({x = 0, y = 0, z = 0})
-    dieObj.setAngularVelocity({x = 0, y = 0, z = 0})
-
-    local diePosition = dieObj.getPosition()
-    diePosition.x = snapCoord(diePosition.x, Grid.offsetX, Grid.sizeX)
-    diePosition.z = snapCoord(diePosition.z, Grid.offsetY, Grid.sizeY)
-    dieObj.setPosition(diePosition)
+local function announceVictory(attackerDie)
+    local player = config.players:find(function(_, id)
+        return not attackerDie.hasTag(config.tags.dice[id])
+    end)
+    broadcastToAll(string.format("%s wins!", player.name), player.color)
 end
 
-function util.getSnappedPosition(obj)
-    local position = obj.getPosition()
-    position.x = snapCoord(position.x, Grid.offsetX, Grid.sizeX)
-    position.z = snapCoord(position.z, Grid.offsetY, Grid.sizeY)
-    return position
-end
-
-function util.roll(dieObj, isAttack)
-    local numSidesOrig = util.getNumSides(dieObj)
-    local defenseOverride = not isAttack and
-                                config.defenseOverride[numSidesOrig] or nil
-    local numSides = not isAttack and defenseOverride or numSidesOrig
+function util.rollAttack(attackerDie)
+    local numSides = util.getNumSides(attackerDie)
 
     local result = math.floor(math.random() * numSides) + 1
-    local mod = not state.hasAttacked and isAttack and config.attackBonus or 0
+    local mod = not state.hasAttacked and config.attackBonus or 0
     local resultWithMod = result + mod
-    print(string.format("%s: (d%d%s) %d%s", isAttack and "attack" or "defense",
-                        numSidesOrig, defenseOverride and
-                            string.format(" -> d%d", defenseOverride) or "",
-                        result,
-                        mod ~= 0 and
-                            string.format("+ %d = %d", config.attackBonus,
-                                          resultWithMod) or ""))
+    printToAll(string.format("attack: (d%d) %d%s", numSides, result,
+                             mod ~= 0 and
+                                 string.format("+ %d = %d", config.attackBonus,
+                                               resultWithMod) or ""))
     return resultWithMod
+end
+
+function util.rollAttackHp(attackerDie)
+    local numSides = util.getNumSides(attackerDie)
+    local result = math.floor(math.random() * numSides) + 1
+    printToAll(string.format("attack: (d%d) %d", numSides, result))
+
+    local hpValues = damageOpponent(attackerDie, result)
+    printToAll(string.format("hp reduction: %d => %d", hpValues.oldHp,
+                             hpValues.newHp), config.color.red)
+
+    if hpValues.newHp <= 0 then announceVictory(attackerDie) end
+
+    return result
+end
+
+function util.colorString(color)
+    return string.format("%s %s %s", color.r, color.g, color.b)
+end
+
+function util.rollDefense(defenderDie)
+    local numSidesOrig = util.getNumSides(defenderDie)
+    local defenseOverride = config.defenseOverride[numSidesOrig] or nil
+    local numSides = defenseOverride or numSidesOrig
+
+    local result = math.floor(math.random() * numSides) + 1
+    printToAll(string.format("defense: (d%d%s) %d", numSidesOrig,
+                             defenseOverride and
+                                 string.format(" -> d%d", defenseOverride) or "",
+                             result))
+    return result
 end
 
 function util.getDieTag(dieObj)
