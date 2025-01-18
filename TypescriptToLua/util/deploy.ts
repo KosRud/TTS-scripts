@@ -1,18 +1,25 @@
-import * as path from 'path';
-import * as net from 'node:net';
+import * as path from 'jsr:@std/path';
 
 const localAppData = Deno.env.get('LOCALAPPDATA');
 if (!localAppData) {
 	throw new Error('LOCALAPPDATA environment variable not set');
 }
 
-Deno.copyFileSync(
-	'./build/bundle.lua',
-	path.join(
-		localAppData,
-		'Temp/TabletopSimulator/Tabletop Simulator Lua/Global.-1.lua'
-	)
-);
+const buildPath = Deno.args[0];
+
+for await (const dirEntry of Deno.readDir(buildPath)) {
+	if (!dirEntry.isFile) {
+		continue;
+	}
+	Deno.copyFileSync(
+		path.join(buildPath, dirEntry.name),
+		path.join(
+			localAppData,
+			'Temp/TabletopSimulator/Tabletop Simulator Lua',
+			dirEntry.name
+		)
+	);
+}
 
 // const conn = await Deno.connect({ hostname: '127.0.0.1', port: 39999 });
 // const message = JSON.stringify({

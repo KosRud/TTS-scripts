@@ -1,13 +1,17 @@
 {
 	"tasks": {
 		"build": "deno run -A  ./node_modules/typescript-to-lua/dist/tstl.js",
-		"deploy": "deno task build; deno run -A ./util/deploy.ts",
-		"listen": "deno run -A ./util/listen.ts"
-	},
-	"compilerOptions": {
-		"types": ["../../libraries/tts-types-bundle/index.d.ts"]
+		"deploy": "deno task build; deno run -A ../../util/deploy.ts ./build"
 	},
 	"imports": {
-		"path": "jsr:@std/path"
-	}
+		"path": "jsr:@std/path",
+		"tts-types": "npm:tts-types@^0.0.3",
+		"typescript-to-lua": "npm:typescript-to-lua@^1.29.1"
+	},
+	"lint": {
+		"rules": {
+			"exclude": ["no-explicit-any"]
+		}
+	},
+	"nodeModulesDir": "manual"
 }

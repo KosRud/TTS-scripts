@@ -1,7 +1,0 @@
-{
-	"dependencies": {
-		"tts-types": "^0.0.3",
-		"typescript": "^5.7.3",
-		"typescript-to-lua": "^1.29.1"
-	}
-}

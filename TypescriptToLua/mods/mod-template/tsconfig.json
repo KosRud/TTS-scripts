@@ -13,14 +13,14 @@
 		"declarationMap": false,
 
 		"strict": true,
-		"types": ["../../libraries/tts-types-bundle/index.d.ts"]
+		"types": ["./types/index.d.ts"]
 	},
 	"include": ["./src"],
 	"tstl": {
 		"luaTarget": "5.2",
 		"noImplicitSelf": true,
 		"tstlVerbose": true,
-		"luaBundle": "bundle.lua",
+		"luaBundle": "music manager.9e8fc3.lua",
 		"luaBundleEntry": "src/mod.ts"
 	}
 }
