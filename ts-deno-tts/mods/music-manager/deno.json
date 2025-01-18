@@ -13,5 +13,11 @@
 			"exclude": ["no-explicit-any"]
 		}
 	},
-	"nodeModulesDir": "manual"
+	"nodeModulesDir": "manual",
+	"compilerOptions": {
+		"lib": ["ESNext"],
+		"strict": true,
+		"types": ["./types/index.d.ts"]
+	},
+	"unstable": ["sloppy-imports"]
 }

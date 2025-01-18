@@ -16,7 +16,7 @@ async function handleConnection(conn: Deno.Conn) {
 				const jsonData = JSON.parse(data);
 				console.log('Received JSON:', jsonData);
 			} catch (e) {
-				log('received invalid JSON!');
+				console.log('received invalid JSON!');
 			}
 		}
 	} catch (error) {
