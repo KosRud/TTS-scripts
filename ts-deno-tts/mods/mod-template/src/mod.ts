@@ -29,5 +29,6 @@ rebuildUi = function () {
 
 onLoad = function (saveData: any) {
 	broadcastToAll('ts can to tts!', { r: 1, g: 1, b: 1 });
+	Array.from({ length: 5 }).forEach((value, id) => printToAll(String(id)));
 	rebuildUi();
 };

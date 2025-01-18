@@ -20,7 +20,7 @@
 		"luaTarget": "5.2",
 		"noImplicitSelf": true,
 		"tstlVerbose": true,
-		"luaBundle": "Global.-1.lua",
+		"luaBundle": "music manager.9e8fc3.lua",
 		"luaBundleEntry": "src/mod.ts"
 	}
 }
